@@ -1,0 +1,217 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>u8g2移植 | 时光渐渐逝去</title><meta name="keywords" content="u8g2"><meta name="author" content="simon yuan"><meta name="copyright" content="simon yuan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="[u8g2]u8g2移植   1. u8g2库   单色显示库，功能强大，移植容易, 有c&#x2F;c++版本 链接 https:&#x2F;&#x2F;github.com&#x2F;olikraus&#x2F;u8g2   2. 移植(c版本)   u8g2 library中的csrc文件夹中的源文件加入project中 首先移植u8g2对于不同硬件的配置函数，根据lcd模块的驱动芯片，选取器件对应的驱动文件(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="u8g2移植">
+<meta property="og:url" content="https://tresordie.github.io/2022/02/18/[u8g2]u8g2%E7%A7%BB%E6%A4%8D/index.html">
+<meta property="og:site_name" content="时光渐渐逝去">
+<meta property="og:description" content="[u8g2]u8g2移植   1. u8g2库   单色显示库，功能强大，移植容易, 有c&#x2F;c++版本 链接 https:&#x2F;&#x2F;github.com&#x2F;olikraus&#x2F;u8g2   2. 移植(c版本)   u8g2 library中的csrc文件夹中的源文件加入project中 首先移植u8g2对于不同硬件的配置函数，根据lcd模块的驱动芯片，选取器件对应的驱动文件(">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20220218202212193.png">
+<meta property="article:published_time" content="2022-02-18T11:00:00.000Z">
+<meta property="article:modified_time" content="2022-09-01T12:14:35.807Z">
+<meta property="article:author" content="simon yuan">
+<meta property="article:tag" content="u8g2">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20220218202212193.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://tresordie.github.io/2022/02/18/[u8g2]u8g2%E7%A7%BB%E6%A4%8D/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'u8g2移植',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-01 20:14:35'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="时光渐渐逝去" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/me.JPG" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">73</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">22</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20220218202212193.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">时光渐渐逝去</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">u8g2移植</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-02-18T11:00:00.000Z" title="发表于 2022-02-18 19:00:00">2022-02-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-09-01T12:14:35.807Z" title="更新于 2022-09-01 20:14:35">2022-09-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/GUI/">GUI</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="u8g2移植"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="u8g2u8g2移植">[u8g2]u8g2移植</h1>
+<p><img
+src="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20220218201932823.png"
+alt="image-20220218201932823" /><img
+src="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20220218202114185.png"
+alt="image-20220218202114185" /></p>
+<p><img
+src="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20220218202212193.png" /><img
+src="/Users/yuanyong/Library/Application%20Support/typora-user-images/image-20220218202441106.png"
+alt="image-20220218202441106" /></p>
+<h2 id="u8g2库">1. u8g2库</h2>
+<blockquote>
+<ol type="1">
+<li><p>单色显示库，功能强大，移植容易, 有c/c++版本</p></li>
+<li><p>链接</p>
+<p>https://github.com/olikraus/u8g2</p></li>
+</ol>
+</blockquote>
+<h2 id="移植c版本">2. 移植(c版本)</h2>
+<blockquote>
+<ol type="1">
+<li><p>u8g2 library中的csrc文件夹中的源文件加入project中</p></li>
+<li><p>首先移植u8g2对于不同硬件的配置函数，根据lcd模块的驱动芯片，选取器件对应的驱动文件(当前使用的是i2c接口的12864
+oled,
+驱动芯片为ssd1306)，在u8g2_d_setup.c中选取u8g2_Setup_ssd1306_i2c_128x64_noname_f函数，其它函数全部删除，这里也可以选u8g2_Setup_ssd1306_i2c_128x64_noname_1或者u8g2_Setup_ssd1306_i2c_128x64_noname_2函数，主要区别是显存使用哪种方式，f表示全帧缓存方式，需要的RAM空间较大，可自行根据硬件做选择</p></li>
+<li><p>u8g2_Setup_ssd1306_i2c_128x64_noname_f函数原型中其它被调用的回调函数需要我们提供，函数内部功能：</p>
+<ul>
+<li>u8g2_SetupDisplay用于配置硬件接口，硬件驱动方式及驱动方式中相应的延时等；这里可以支持硬件总线方式或者软件BitBang方式(如：硬件i2c或者软件模拟i2c)；软件模拟方式时，u8g2库已经提供好了时序，只需要自行提供相应的延时函数及硬件接口的gpio相关操作函数即可，软件模拟方式也最容易移植</li>
+<li>u8g2_m_16_8_f指定显存是静态还是动态方式，存在于u8g2_d_memory.c中，u8g2_d_memory.c中的其它函数全部可以删除(没有用到，删除可以在编译后节省空间)</li>
+<li>u8g2_SetupBuffer用于配置缓存区，显示区域高度(pixels)，缓存的排列方式(像素点字节如何取模)及显示是否旋转</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* ssd1306 f */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">u8g2_Setup_ssd1306_i2c_128x64_noname_f</span><span class="params">(<span class="keyword">u8g2_t</span> *u8g2, <span class="keyword">const</span> <span class="keyword">u8g2_cb_t</span> *rotation, u8x8_msg_cb byte_cb, u8x8_msg_cb gpio_and_delay_cb)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">uint8_t</span> tile_buf_height;</span><br><span class="line">    <span class="keyword">uint8_t</span> *buf;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* display_info --&gt; u8x8_d_ssd1306_128x64_noname */</span></span><br><span class="line">    u8g2_SetupDisplay(u8g2, u8x8_d_ssd1306_128x64_noname, u8x8_cad_ssd13xx_fast_i2c, byte_cb, gpio_and_delay_cb);</span><br><span class="line">    buf = u8g2_m_16_8_f(&amp;tile_buf_height);      <span class="comment">// tile_buf_height = 8</span></span><br><span class="line">    u8g2_SetupBuffer(u8g2, buf, tile_buf_height, u8g2_ll_hvline_vertical_top_lsb, rotation);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> u8g2_SetupDisplay(u8g2, display_cb, cad_cb, byte_cb, gpio_and_delay_cb) \</span></span><br><span class="line"><span class="meta">  u8x8_Setup(u8g2_GetU8x8(u8g2), (display_cb), (cad_cb), (byte_cb), (gpio_and_delay_cb))</span></span><br></pre></td></tr></table></figure></li>
+<li><p>移植就是需要提供两个回调函数即可</p>
+<ul>
+<li>u8x8_msg_cb byte_cb</li>
+<li>u8x8_msg_cb gpio_and_delay_c</li>
+</ul></li>
+<li><p>基于i2c接口的Oled，硬件i2c及软件模拟i2c的接口实现如下：</p>
+<ul>
+<li><p>软件模拟i2c</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">uint8_t</span> <span class="title">stm32_gpio_and_delay</span><span class="params">(<span class="keyword">u8x8_t</span> *u8x8, <span class="keyword">uint8_t</span> msg, <span class="keyword">uint8_t</span> arg_int, <span class="keyword">void</span> *arg_ptr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//printf(&quot;%s:msg = %d,arg_int = %d\r\n&quot;,__FUNCTION__,msg,arg_int);</span></span><br><span class="line">    <span class="keyword">switch</span> (msg) &#123;</span><br><span class="line">    <span class="keyword">case</span> U8X8_MSG_DELAY_100NANO:        <span class="comment">// delay arg_int * 100 nano seconds</span></span><br><span class="line">        __NOP();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> U8X8_MSG_DELAY_10MICRO:        <span class="comment">// delay arg_int * 10 micro seconds</span></span><br><span class="line">        <span class="comment">// for (uint16_t n = 0; n &lt; 320; n++) &#123;</span></span><br><span class="line">        <span class="comment">//     __NOP();</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line">        delay_us(<span class="number">10</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> U8X8_MSG_DELAY_MILLI:          <span class="comment">// delay arg_int * 1 milli second</span></span><br><span class="line">        delay_ms(<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> U8X8_MSG_DELAY_I2C:            <span class="comment">// arg_int is the I2C speed in 100KHz, e.g. 4 = 400 KHz</span></span><br><span class="line">        <span class="comment">//delay 5us</span></span><br><span class="line">        delay_us(<span class="number">5</span>);                      <span class="comment">// arg_int=1: delay by 5us, arg_int = 4: delay by 1.25us</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span> U8X8_MSG_GPIO_I2C_CLOCK:       <span class="comment">// arg_int=0: Output low at I2C clock pin</span></span><br><span class="line">        <span class="keyword">if</span> (arg_int == <span class="number">1</span>) &#123;</span><br><span class="line">            GPIO_SetBits(SCL_GPIO, SCL_GPIO_Pin);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (arg_int == <span class="number">0</span>) &#123;</span><br><span class="line">            GPIO_ResetBits(SCL_GPIO, SCL_GPIO_Pin);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span>;                            <span class="comment">// arg_int=1: Input dir with pullup high for I2C clock pin</span></span><br><span class="line">    <span class="keyword">case</span> U8X8_MSG_GPIO_I2C_DATA:        <span class="comment">// arg_int=0: Output low at I2C data pin</span></span><br><span class="line">        <span class="comment">//  printf(&quot;U8X8_MSG_GPIO_I2C_DATA:%d\r\n&quot;,arg_int);</span></span><br><span class="line">        <span class="keyword">if</span> (arg_int == <span class="number">1</span>) &#123;</span><br><span class="line">            GPIO_SetBits(SDA_GPIO, SDA_GPIO_Pin);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (arg_int == <span class="number">0</span>) &#123;</span><br><span class="line">            GPIO_ResetBits(SDA_GPIO, SDA_GPIO_Pin);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span>;                            <span class="comment">// arg_int=1: Input dir with pullup high for I2C data pin</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        u8x8_SetGPIOResult(u8x8, <span class="number">1</span>);      <span class="comment">// default return value</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>硬件i2c</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">uint8_t</span> <span class="title">u8x8_byte_hw_i2c</span><span class="params">(<span class="keyword">u8x8_t</span> *u8x8, <span class="keyword">uint8_t</span> msg, <span class="keyword">uint8_t</span> arg_int, <span class="keyword">void</span> *arg_ptr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">uint8_t</span> buffer[<span class="number">32</span>];        <span class="comment">/* u8g2/u8x8 will never send more than 32 bytes between START_TRANSFER and END_TRANSFER */</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">uint8_t</span> buf_idx;</span><br><span class="line">    <span class="keyword">uint8_t</span> *data;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span> (msg) &#123;</span><br><span class="line">    <span class="keyword">case</span> U8X8_MSG_BYTE_SEND:</span><br><span class="line">        data = (<span class="keyword">uint8_t</span> *)arg_ptr;</span><br><span class="line">        <span class="keyword">while</span> ( arg_int &gt; <span class="number">0</span> ) &#123;</span><br><span class="line">            buffer[buf_idx++] = *data;</span><br><span class="line">            data++;</span><br><span class="line">            arg_int--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span> U8X8_MSG_BYTE_INIT:</span><br><span class="line">        <span class="comment">/* add your custom code to init i2c subsystem */</span></span><br><span class="line">        OLED_Init();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span> U8X8_MSG_BYTE_START_TRANSFER:</span><br><span class="line">        buf_idx = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span> U8X8_MSG_BYTE_END_TRANSFER:</span><br><span class="line">        i2c_transfer(OLED_ADDRESS, buf_idx, buffer);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">uint8_t</span> <span class="title">stm32_gpio_and_delay</span><span class="params">(<span class="keyword">u8x8_t</span> *u8x8, <span class="keyword">uint8_t</span> msg, <span class="keyword">uint8_t</span> arg_int, <span class="keyword">void</span> *arg_ptr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> (msg) &#123;</span><br><span class="line">    <span class="keyword">case</span> U8X8_MSG_GPIO_AND_DELAY_INIT:  <span class="comment">// called once during init phase of u8g2/u8x8</span></span><br><span class="line">        <span class="keyword">break</span>;                            <span class="comment">// can be used to setup pins</span></span><br><span class="line">    <span class="keyword">case</span> U8X8_MSG_DELAY_NANO:           <span class="comment">// delay arg_int * 1 nano second</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> U8X8_MSG_DELAY_100NANO:        <span class="comment">// delay arg_int * 100 nano seconds</span></span><br><span class="line">        __NOP();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> U8X8_MSG_DELAY_10MICRO:        <span class="comment">// delay arg_int * 10 micro seconds</span></span><br><span class="line">        delay_us(<span class="number">10</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> U8X8_MSG_DELAY_MILLI:          <span class="comment">// delay arg_int * 1 milli second</span></span><br><span class="line">        delay_ms(<span class="number">10</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> U8X8_MSG_DELAY_I2C:                <span class="comment">// arg_int is the I2C speed in 100KHz, e.g. 4 = 400 KHz</span></span><br><span class="line">        delay_us(<span class="number">5</span>);</span><br><span class="line">        <span class="keyword">break</span>;                            <span class="comment">// arg_int=1: delay by 5us, arg_int = 4: delay by 1.25us</span></span><br><span class="line">    <span class="keyword">case</span> U8X8_MSG_GPIO_I2C_CLOCK:       <span class="comment">// arg_int=0: Output low at I2C clock pin</span></span><br><span class="line">        <span class="keyword">break</span>;                            <span class="comment">// arg_int=1: Input dir with pullup high for I2C clock pin</span></span><br><span class="line">    <span class="keyword">case</span> U8X8_MSG_GPIO_I2C_DATA:            <span class="comment">// arg_int=0: Output low at I2C data pin</span></span><br><span class="line">        <span class="keyword">break</span>;                            <span class="comment">// arg_int=1: Input dir with pullup high for I2C data pin</span></span><br><span class="line">    <span class="keyword">case</span> U8X8_MSG_GPIO_MENU_SELECT:</span><br><span class="line">        u8x8_SetGPIOResult(u8x8, <span class="comment">/* get menu select pin state */</span> <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> U8X8_MSG_GPIO_MENU_NEXT:</span><br><span class="line">        u8x8_SetGPIOResult(u8x8, <span class="comment">/* get menu next pin state */</span> <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> U8X8_MSG_GPIO_MENU_PREV:</span><br><span class="line">        u8x8_SetGPIOResult(u8x8, <span class="comment">/* get menu prev pin state */</span> <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> U8X8_MSG_GPIO_MENU_HOME:</span><br><span class="line">        u8x8_SetGPIOResult(u8x8, <span class="comment">/* get menu home pin state */</span> <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        u8x8_SetGPIOResult(u8x8, <span class="number">1</span>);          <span class="comment">// default return value</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+</ol>
+</blockquote>
+<h2 id="u8g2库函数测试">3. u8g2库函数测试</h2>
+<blockquote>
+<ol type="1">
+<li><p>u8g2库函数测试代码参考：</p>
+<p>https://gitee.com/simonyuan2019/gui/tree/master/u8g2/oled12864_ssd1306/user/app/mygui/u8g2test.c</p></li>
+</ol>
+</blockquote>
+<h2 id="基于u8g2库实现的简易文本菜单">4.
+基于u8g2库实现的简易文本菜单</h2>
+<blockquote>
+<ol type="1">
+<li><p>基于u8g2库的简易文本菜单，参考：</p>
+<p>https://gitee.com/simonyuan2019/gui/tree/master/u8g2/oled12864_ssd1306/user/app/menu/textmenu.c</p></li>
+</ol>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">simon yuan</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://tresordie.github.io/2022/02/18/[u8g2]u8g2%E7%A7%BB%E6%A4%8D/">https://tresordie.github.io/2022/02/18/[u8g2]u8g2%E7%A7%BB%E6%A4%8D/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://tresordie.github.io" target="_blank">时光渐渐逝去</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/u8g2/">u8g2</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/03/04/%5BSTM32%5DFSMC/"><img class="prev-cover" src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/FSMC.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">FSMC</div></div></a></div><div class="next-post pull-right"><a href="/2022/02/01/%5BZLG_GUI%5DZLG_GUI%E7%A7%BB%E6%A4%8D%E5%88%B0STM32%E9%A9%B1%E5%8A%A812864OLED/"><img class="next-cover" src="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20220201220015116.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">ZLG_GUI移植到STM32驱动12864 OLED</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/me.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">simon yuan</div><div class="author-info__description">记录分享学习、生活的地方</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">73</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">22</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://gitee.com/simonyuan2019"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://gitee.com/simonyuan2019" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:Tresordie@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">IoT物联网/嵌入式学习探讨</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#u8g2u8g2%E7%A7%BB%E6%A4%8D"><span class="toc-number">1.</span> <span class="toc-text">[u8g2]u8g2移植</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#u8g2%E5%BA%93"><span class="toc-number">1.1.</span> <span class="toc-text">1. u8g2库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%BB%E6%A4%8Dc%E7%89%88%E6%9C%AC"><span class="toc-number">1.2.</span> <span class="toc-text">2. 移植(c版本)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#u8g2%E5%BA%93%E5%87%BD%E6%95%B0%E6%B5%8B%E8%AF%95"><span class="toc-number">1.3.</span> <span class="toc-text">3. u8g2库函数测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8Eu8g2%E5%BA%93%E5%AE%9E%E7%8E%B0%E7%9A%84%E7%AE%80%E6%98%93%E6%96%87%E6%9C%AC%E8%8F%9C%E5%8D%95"><span class="toc-number">1.4.</span> <span class="toc-text">4.
+基于u8g2库实现的简易文本菜单</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/08/11/%5BPython%5D%E5%88%97%E8%A1%A8/" title="Python列表"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/0f6019e15f1d8ae07e7e8ea16d242676.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python列表"/></a><div class="content"><a class="title" href="/2022/08/11/%5BPython%5D%E5%88%97%E8%A1%A8/" title="Python列表">Python列表</a><time datetime="2022-08-11T12:00:00.000Z" title="发表于 2022-08-11 20:00:00">2022-08-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/03/%5BGPS%5DGPS%E7%AE%80%E4%BB%8B/" title="GPS Basic"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/GPS.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GPS Basic"/></a><div class="content"><a class="title" href="/2022/08/03/%5BGPS%5DGPS%E7%AE%80%E4%BB%8B/" title="GPS Basic">GPS Basic</a><time datetime="2022-08-03T02:00:00.000Z" title="发表于 2022-08-03 10:00:00">2022-08-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/05/29/VNA%E6%A0%A1%E5%87%86/" title="VNA校准"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/VNA%20Through%20standard.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="VNA校准"/></a><div class="content"><a class="title" href="/2022/05/29/VNA%E6%A0%A1%E5%87%86/" title="VNA校准">VNA校准</a><time datetime="2022-05-29T02:00:00.000Z" title="发表于 2022-05-29 10:00:00">2022-05-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/05/22/%5BAudio%5Dwav%E9%9F%B3%E9%A2%91%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/" title="wav音频文件解析"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/wav.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="wav音频文件解析"/></a><div class="content"><a class="title" href="/2022/05/22/%5BAudio%5Dwav%E9%9F%B3%E9%A2%91%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/" title="wav音频文件解析">wav音频文件解析</a><time datetime="2022-05-22T02:00:00.000Z" title="发表于 2022-05-22 10:00:00">2022-05-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/04/%5Bfs%5DFatFS%E7%A7%BB%E6%A4%8D%E6%80%BB%E7%BB%93/" title="FatFS移植总结"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/FatFS%E7%A7%BB%E6%A4%8D%E5%AF%BC%E5%9B%BE.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="FatFS移植总结"/></a><div class="content"><a class="title" href="/2022/04/04/%5Bfs%5DFatFS%E7%A7%BB%E6%A4%8D%E6%80%BB%E7%BB%93/" title="FatFS移植总结">FatFS移植总结</a><time datetime="2022-04-04T11:00:00.000Z" title="发表于 2022-04-04 19:00:00">2022-04-04</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20220218202212193.png')"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2022 By simon yuan</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><div class="js-pjax"></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="I,LOVE,YOU" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

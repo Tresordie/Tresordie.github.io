@@ -1,0 +1,311 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>BLDC位置环PID(位置式)控制 | 时光渐渐逝去</title><meta name="keywords" content="PID"><meta name="author" content="simon yuan"><meta name="copyright" content="simon yuan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="[PID]BLDC 位置环 PID(位置式)控制 1. 连续控制的 PID 公式 \[ \begin{align} &amp; u(t) &#x3D; K_p[err(t) + \frac1 T_t \int_{0}^{t} err(t)dt + T_d \frac{derr(t)}{dt}] \\ &amp; K_p ： 比例增益，与比例度为倒数关系 \\ &amp; T_t ： 积分时间">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BLDC位置环PID(位置式)控制">
+<meta property="og:url" content="https://tresordie.github.io/2022/03/20/[PID]BLDC%E4%BD%8D%E7%BD%AE%E7%8E%AFPID(%E4%BD%8D%E7%BD%AE%E5%BC%8F)%E6%8E%A7%E5%88%B6/index.html">
+<meta property="og:site_name" content="时光渐渐逝去">
+<meta property="og:description" content="[PID]BLDC 位置环 PID(位置式)控制 1. 连续控制的 PID 公式 \[ \begin{align} &amp; u(t) &#x3D; K_p[err(t) + \frac1 T_t \int_{0}^{t} err(t)dt + T_d \frac{derr(t)}{dt}] \\ &amp; K_p ： 比例增益，与比例度为倒数关系 \\ &amp; T_t ： 积分时间">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/1211.png">
+<meta property="article:published_time" content="2022-03-20T03:00:00.000Z">
+<meta property="article:modified_time" content="2022-09-01T12:14:35.802Z">
+<meta property="article:author" content="simon yuan">
+<meta property="article:tag" content="PID">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/1211.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://tresordie.github.io/2022/03/20/[PID]BLDC%E4%BD%8D%E7%BD%AE%E7%8E%AFPID(%E4%BD%8D%E7%BD%AE%E5%BC%8F)%E6%8E%A7%E5%88%B6/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'BLDC位置环PID(位置式)控制',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-01 20:14:35'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="时光渐渐逝去" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/me.JPG" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">73</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">22</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://raw.githubusercontent.com/Tresordie/PicBed/master/img/1211.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">时光渐渐逝去</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">BLDC位置环PID(位置式)控制</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-03-20T03:00:00.000Z" title="发表于 2022-03-20 11:00:00">2022-03-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-09-01T12:14:35.802Z" title="更新于 2022-09-01 20:14:35">2022-09-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Algorithm/">Algorithm</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="BLDC位置环PID(位置式)控制"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="pidbldc-位置环-pid位置式控制">[PID]BLDC 位置环
+PID(位置式)控制</h1>
+<h2 id="连续控制的-pid-公式">1. 连续控制的 PID 公式</h2>
+<p><span class="math display">\[
+\begin{align}
+&amp; u(t) = K_p[err(t) + \frac1 T_t \int_{0}^{t} err(t)dt + T_d
+\frac{derr(t)}{dt}] \\
+&amp; K_p ： 比例增益，与比例度为倒数关系 \\
+&amp; T_t ： 积分时间常数 \\
+&amp; u(t)： PID控制器的输出信号，为PID控制的操作量 \\
+&amp; err(t)： 目标值target与测量值之间的差值
+\end{align}
+\]</span></p>
+<h2 id="离散位置式-pid-公式">2. 离散位置式 PID 公式</h2>
+<p><span class="math display">\[
+\begin{align}
+&amp; u(k) = K_p[err(k) + K_i\sum_{j=0}^{k}err(j) + K_d(err(k) -
+err(k-1))] \\
+&amp; k：采样的序号 \\
+&amp; err(k)：第k次的误差 \\
+&amp; u(k)：PID的输出操作量 \\
+&amp; K_p：比例增益 \\
+&amp; K_i = K_p * \frac {T}{T_i} \\
+&amp; K_d = K_p * \frac {T_d}{T}
+\end{align}
+\]</span></p>
+<h2 id="位置式-pid-实现速度环">3. 位置式 PID 实现速度环</h2>
+<h3 id="实现过程">3.1 实现过程</h3>
+<p><img
+src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/1211.png"
+alt="1211" /></p>
+<blockquote>
+<ol type="1">
+<li>位置式 PID 的目标值为需要设定的速度</li>
+<li>测量值由霍尔传感器来测实时速度进行反馈</li>
+<li>PID 计算输出为系统操作量(即控制电机的 PWM)</li>
+</ol>
+</blockquote>
+<h3 id="代码实现">3.2 代码实现</h3>
+<h4 id="a-电机相应的数据结构">(a) 电机相应的数据结构</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="keyword">int32_t</span> timeout;                  		<span class="comment">// 定时器更新计数</span></span><br><span class="line">    <span class="keyword">float</span>   speed;                    		<span class="comment">// 电机速度 rps（转/分钟）</span></span><br><span class="line">    <span class="keyword">int32_t</span> enable_flag;              		<span class="comment">// 电机使能标志</span></span><br><span class="line">    <span class="keyword">int32_t</span> speed_group[SPEED_FILTER_NUM];</span><br><span class="line">    <span class="keyword">int32_t</span> location;</span><br><span class="line">&#125; <span class="keyword">motor_rotate_t</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="b-电机旋转方向的判断">(b) 电机旋转方向的判断</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * @brief  更新电机实际速度方向</span></span><br><span class="line"><span class="comment">  * @param  dir_in：霍尔值</span></span><br><span class="line"><span class="comment">  * @retval 无</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">update_speed_dir</span><span class="params">(<span class="keyword">uint8_t</span> dir_in)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">uint8_t</span> step[<span class="number">6</span>] = &#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;<span class="comment">// Couter Clock Wise(CCW)逆时针方向旋转时，三相加电步骤</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">uint8_t</span> num_old = <span class="number">0</span>;          <span class="comment">// hall sensor state location of last time</span></span><br><span class="line">    <span class="keyword">uint8_t</span> step_loc = <span class="number">0</span>;                <span class="comment">// 记录当前霍尔位置</span></span><br><span class="line">    <span class="keyword">int8_t</span> dir = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (step_loc = <span class="number">0</span>; step_loc &lt; <span class="number">6</span>; step_loc++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (step[step_loc] == dir_in) &#123;  <span class="comment">// 找到当前霍尔的位置</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 端点处理 */</span></span><br><span class="line">    <span class="keyword">if</span> (step_loc == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (num_old == <span class="number">1</span>) &#123;</span><br><span class="line">            dir = <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (num_old == <span class="number">5</span>) &#123;</span><br><span class="line">            dir = <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/* 端点处理 */</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (step_loc == <span class="number">5</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (num_old == <span class="number">0</span>) &#123;</span><br><span class="line">            dir = <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (num_old == <span class="number">4</span>) &#123;</span><br><span class="line">            dir = <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (step_loc &gt; num_old) &#123;</span><br><span class="line">        dir = <span class="number">-1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (step_loc &lt; num_old) &#123;</span><br><span class="line">        dir = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    num_old = step_loc;</span><br><span class="line">    motor_drive.speed_group[count - <span class="number">1</span>] *= dir;</span><br><span class="line">    motor_drive.location += dir;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="c-电机速度检测">(c) 电机速度检测</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">update_motor_speed</span><span class="params">(<span class="keyword">uint8_t</span> dir_in, <span class="keyword">uint32_t</span> time)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> speed_temp = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> flag = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">float</span> f = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 计算速度：</span></span><br><span class="line"><span class="comment">       电机每转一圈共用12个脉冲，(1.0/(72000000.0/128.0)为计数器的周期，(1.0/(72000000.0/128.0) * time)为时间长。</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (time == <span class="number">0</span>)</span><br><span class="line">        motor_drive.speed_group[count++] = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        f = (<span class="number">1.0f</span> / (<span class="number">72000000.0f</span> / HALL_PRESCALER_COUNT) * time);</span><br><span class="line">        f = (<span class="number">1.0f</span> / <span class="number">12.0f</span>) / (f  / <span class="number">60.0f</span>);</span><br><span class="line">        motor_drive.speed_group[count++] = f;</span><br><span class="line">    &#125;</span><br><span class="line">    update_speed_dir(dir_in);</span><br><span class="line">    <span class="comment">//  motor_drive.speed = motor_drive.speed_group[count-1];</span></span><br><span class="line">    <span class="keyword">if</span> (count &gt;= SPEED_FILTER_NUM) &#123;</span><br><span class="line">        flag = <span class="number">1</span>;</span><br><span class="line">        count = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//  return ;</span></span><br><span class="line">    speed_temp = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 计算近 SPEED_FILTER_NUM 次的速度平均值（滤波） */</span></span><br><span class="line">    <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">uint8_t</span> c = <span class="number">0</span>; c &lt; SPEED_FILTER_NUM; c++) &#123;</span><br><span class="line">            speed_temp += motor_drive.speed_group[c];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        motor_drive.speed = speed_temp / SPEED_FILTER_NUM;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">uint8_t</span> c = <span class="number">0</span>; c &lt; count; c++) &#123;</span><br><span class="line">            speed_temp += motor_drive.speed_group[c];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        motor_drive.speed = speed_temp / count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="d-pid-的调节周期实现">(d) PID 的调节周期实现</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">BasicTIM_Configuration</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/* preep priority and sub-priority configuration */</span></span><br><span class="line">    HAL_NVIC_SetPriority(TIM6_DAC_IRQn, <span class="number">1</span>, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* enbale nvic interrupt */</span></span><br><span class="line">    HAL_NVIC_EnableIRQ(TIM6_DAC_IRQn);</span><br><span class="line">    <span class="comment">// 开启TIMx_CLK,x[6,7]</span></span><br><span class="line">    __HAL_RCC_TIM6_CLK_ENABLE();</span><br><span class="line"></span><br><span class="line">    TIM_TimeBaseStructure.Instance    = TIM6;</span><br><span class="line">    TIM_TimeBaseStructure.Init.Period = BASIC_PERIOD_COUNT - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//TIM clock source:     TIMxCLK = 2 * PCLK1</span></span><br><span class="line">    <span class="comment">//                      PCLK1 = HCLK / 2</span></span><br><span class="line">    <span class="comment">//                      =&gt; TIMxCLK=HCLK/2=SystemCoreClock/2=72MHz</span></span><br><span class="line">    <span class="comment">// TIM&#x27;s frequency      =&gt; TIMxCLK/BASIC_PRESCALER_COUNT</span></span><br><span class="line">    TIM_TimeBaseStructure.Init.Prescaler     = BASIC_PRESCALER_COUNT - <span class="number">1</span>;       <span class="comment">// 100kHz</span></span><br><span class="line">    TIM_TimeBaseStructure.Init.CounterMode   = TIM_COUNTERMODE_UP;              <span class="comment">// 向上计数</span></span><br><span class="line">    TIM_TimeBaseStructure.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;          <span class="comment">// 时钟分频</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// TIMx, x[2,3,4,5] time base initialize</span></span><br><span class="line">    HAL_TIM_Base_Init(&amp;TIM_TimeBaseStructure);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// enable TIM&#x27;s update interrupt</span></span><br><span class="line">    HAL_TIM_Base_Start_IT(&amp;TIM_TimeBaseStructure);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="e-pid-周期性调节实现速度环">(e) PID 周期性调节实现速度环</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @brief  pid control motor speed</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">bldcm_pid_control</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int32_t</span> speed_actual = get_motor_speed();                          <span class="comment">// 电机旋转的当前速度</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (bldcm_data.is_enable) &#123;</span><br><span class="line">        <span class="keyword">float</span> cont_val = <span class="number">0</span>;                                            <span class="comment">// 当前控制值</span></span><br><span class="line">        cont_val = PID_realize(speed_actual);</span><br><span class="line">        <span class="keyword">if</span> (cont_val &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            cont_val = -cont_val;</span><br><span class="line">            bldcm_data.direction = MOTOR_REV;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            bldcm_data.direction = MOTOR_FWD;</span><br><span class="line">        &#125;</span><br><span class="line">        cont_val = (cont_val &gt; PWM_PERIOD_COUNT) ? PWM_PERIOD_COUNT : cont_val;  <span class="comment">// 上限处理</span></span><br><span class="line">        set_bldcm_speed(cont_val);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="f-位置式-pid-实现">(f) 位置式 PID 实现</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="keyword">float</span> target_val;               <span class="comment">// 目标值</span></span><br><span class="line">    <span class="keyword">float</span> actual_val;               <span class="comment">// 实际值</span></span><br><span class="line">    <span class="keyword">float</span> err;                      <span class="comment">// 定义偏差值</span></span><br><span class="line">    <span class="keyword">float</span> err_last;                 <span class="comment">// 定义上一个偏差值</span></span><br><span class="line">    <span class="keyword">float</span> Kp, Ki, Kd;               <span class="comment">// 定义比例、积分、微分系数</span></span><br><span class="line">    <span class="keyword">float</span> integral;                 <span class="comment">// 定义积分值</span></span><br><span class="line">&#125; _pid;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PID_param_init</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/* 初始化参数 */</span></span><br><span class="line">    pid.target_val = <span class="number">0.0</span>;</span><br><span class="line">    pid.actual_val = <span class="number">0.0</span>;</span><br><span class="line">    pid.err        = <span class="number">0.0</span>;</span><br><span class="line">    pid.err_last   = <span class="number">0.0</span>;</span><br><span class="line">    pid.integral   = <span class="number">0.0</span>;</span><br><span class="line"></span><br><span class="line">    pid.Kp         = <span class="number">0.12</span>;      <span class="comment">// 一般调节法，单纯Kp = 0.2时，此时不振荡</span></span><br><span class="line">    pid.Ki         = <span class="number">0.07</span>;      <span class="comment">// 一般调节法，单纯Ki = 0.05时，此时不振荡</span></span><br><span class="line">    pid.Kd         = <span class="number">0.0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * @brief  PID算法实现</span></span><br><span class="line"><span class="comment">  * @param  actual_val:实际值</span></span><br><span class="line"><span class="comment">  * @note   无</span></span><br><span class="line"><span class="comment">  * @retval 通过PID计算后的输出</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">PID_realize</span><span class="params">(<span class="keyword">float</span> actual_val)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/*计算目标值与实际值的误差*/</span></span><br><span class="line">    pid.err        = pid.target_val - actual_val;</span><br><span class="line">    pid.integral   += pid.err;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*PID算法实现*/</span></span><br><span class="line">    pid.actual_val = pid.Kp * pid.err +</span><br><span class="line">                     pid.Ki * pid.integral +</span><br><span class="line">                     pid.Kd * (pid.err - pid.err_last);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*误差传递*/</span></span><br><span class="line">    pid.err_last   = pid.err;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*返回当前实际值*/</span></span><br><span class="line">    <span class="keyword">return</span> pid.actual_val;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="pid-整定方法">4. PID 整定方法</h2>
+<h3 id="一般调节法">4.1 一般调节法</h3>
+<h4 id="调节步骤">4.1.1 调节步骤</h4>
+<blockquote>
+<ol type="1">
+<li>首先只调节 Kp, 将 Ki, Kd 置 0</li>
+<li>从小到大增加 Kp，直到系统出现振荡，再反过来，逐渐将 Kp
+减小，直至系统振荡小时，此时的比例增益的 60%-70%设置为比例增益 P
+参数，此时 P 参数调试完成</li>
+<li>从大到小调节积分时间常数 Ti 直至系统出现振荡，再反过来，逐渐增加 Ti
+直至系统振荡消失，设定 PID 系统的积分时间常数 Ti 为当前值的 1.5~1.8
+倍</li>
+<li>确定积分时间常数 Ti 后，Td 一般不用设定，可以为
+0；也可以设定，可以从小到大增加 Td 直至系统出现振荡，再反过来逐渐减小
+Td，直到系统振荡消失，取此时不震荡的 30%作为 PID 系统的微分时间常数</li>
+<li><font color = 'red'>系统空载，带载联调，再对 PID
+参数进行微调</font></li>
+</ol>
+</blockquote>
+<h3 id="临界比例法ziegler-nichols-工程整定法">4.2
+临界比例法(Ziegler-Nichols 工程整定法)</h3>
+<p><img
+src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/image-20220320103729875.png"
+alt="image-20220320103729875" /></p>
+<h4 id="调节步骤-1">4.2.1 调节步骤</h4>
+<blockquote>
+<ol type="1">
+<li>切除 PID 控制器中的积分与微分作用，取较小的比例增益 Kp
+值，并投入闭环运行</li>
+<li>将 Kp 由小变大，直至阶跃响应产生等幅振荡</li>
+<li>记录下等幅时的临界比例系数和两个波峰的时间间隔</li>
+<li>采用经验公式，计算调节器的参数</li>
+</ol>
+</blockquote>
+<p><img
+src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/image-20220320103902484.png"
+alt="image-20220320103902484" /></p>
+<p><span class="math display">\[
+\begin{align}
+&amp; \delta K：产生等幅振荡时的Kp值 \\
+&amp; TK：等幅振荡时，两个波峰之间的时间间隔
+\end{align}
+\]</span></p>
+<h4 id="调节过程">4.2.2 调节过程</h4>
+<blockquote>
+<ol type="1">
+<li>由于调节过程没有上位机软件工具可以测量等幅振荡时，相邻波峰之间的时间间隔，暂时无法使用此法调节</li>
+</ol>
+</blockquote>
+<h2 id="pid-整定质量">5. PID 整定质量</h2>
+<p><img
+src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/29879819_2.jpg" /></p>
+<blockquote>
+<ol type="1">
+<li><font color = 'red'><strong>PID
+参数整定的好不好，有一个简单的量化标准：理想曲线两个波，前高后低
+4:1，其反应的是当外部环境发生变化或者干扰因素存在打破之前的平衡后，系统自动调整达到新平衡的一个动态过程的速度快慢</strong></font></li>
+</ol>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">simon yuan</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://tresordie.github.io/2022/03/20/[PID]BLDC%E4%BD%8D%E7%BD%AE%E7%8E%AFPID(%E4%BD%8D%E7%BD%AE%E5%BC%8F)%E6%8E%A7%E5%88%B6/">https://tresordie.github.io/2022/03/20/[PID]BLDC%E4%BD%8D%E7%BD%AE%E7%8E%AFPID(%E4%BD%8D%E7%BD%AE%E5%BC%8F)%E6%8E%A7%E5%88%B6/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://tresordie.github.io" target="_blank">时光渐渐逝去</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/PID/">PID</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/03/20/%5BPID%5DBLDC%E4%BD%8D%E7%BD%AE%E7%8E%AFPID(%E5%A2%9E%E9%87%8F%E5%BC%8F)%E6%8E%A7%E5%88%B6/"><img class="prev-cover" src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/1211.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">BLDC位置环(增量式)PID控制</div></div></a></div><div class="next-post pull-right"><a href="/2022/03/20/%5BPID%5DBLDC%E9%80%9F%E5%BA%A6%E7%8E%AFPID(%E5%A2%9E%E9%87%8F%E5%BC%8F)%E6%8E%A7%E5%88%B6/"><img class="next-cover" src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/1211.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">BLDC速度环PID(增量式)控制</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/03/20/BLDC%E4%B8%B2%E7%BA%A7PID(%E4%BD%8D%E7%BD%AE%E5%BC%8FPID)%E6%8E%A7%E5%88%B6/" title="BLDC串级PID(位置式PID)控制"><img class="cover" src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/image-20220321005207981.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-20</div><div class="title">BLDC串级PID(位置式PID)控制</div></div></a></div><div><a href="/2022/03/18/%5BPID%5DBLDC%E4%BD%8D%E7%BD%AE%E5%BC%8FPID/" title="BLDC位置式PID"><img class="cover" src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/20220319101047.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-18</div><div class="title">BLDC位置式PID</div></div></a></div><div><a href="/2022/03/20/%5BPID%5DBLDC%E4%BD%8D%E7%BD%AE%E7%8E%AFPID(%E5%A2%9E%E9%87%8F%E5%BC%8F)%E6%8E%A7%E5%88%B6/" title="BLDC位置环(增量式)PID控制"><img class="cover" src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/1211.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-20</div><div class="title">BLDC位置环(增量式)PID控制</div></div></a></div><div><a href="/2022/03/18/%5BPID%5DBLDC%E5%A2%9E%E9%87%8F%E5%BC%8FPID/" title="BLDC增量式PID"><img class="cover" src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/20220319103828.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-18</div><div class="title">BLDC增量式PID</div></div></a></div><div><a href="/2022/03/19/%5BPID%5DBLDC%E9%80%9F%E5%BA%A6%E7%8E%AFPID(%E4%BD%8D%E7%BD%AE%E5%BC%8F)%E6%8E%A7%E5%88%B6/" title="BLDC速度环PID(位置式)控制"><img class="cover" src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/image-20220319180348882.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-19</div><div class="title">BLDC速度环PID(位置式)控制</div></div></a></div><div><a href="/2022/03/20/%5BPID%5DBLDC%E9%80%9F%E5%BA%A6%E7%8E%AFPID(%E5%A2%9E%E9%87%8F%E5%BC%8F)%E6%8E%A7%E5%88%B6/" title="BLDC速度环PID(增量式)控制"><img class="cover" src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/1211.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-20</div><div class="title">BLDC速度环PID(增量式)控制</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/me.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">simon yuan</div><div class="author-info__description">记录分享学习、生活的地方</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">73</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">22</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://gitee.com/simonyuan2019"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://gitee.com/simonyuan2019" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:Tresordie@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">IoT物联网/嵌入式学习探讨</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#pidbldc-%E4%BD%8D%E7%BD%AE%E7%8E%AF-pid%E4%BD%8D%E7%BD%AE%E5%BC%8F%E6%8E%A7%E5%88%B6"><span class="toc-number">1.</span> <span class="toc-text">[PID]BLDC 位置环
+PID(位置式)控制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E7%BB%AD%E6%8E%A7%E5%88%B6%E7%9A%84-pid-%E5%85%AC%E5%BC%8F"><span class="toc-number">1.1.</span> <span class="toc-text">1. 连续控制的 PID 公式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A6%BB%E6%95%A3%E4%BD%8D%E7%BD%AE%E5%BC%8F-pid-%E5%85%AC%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">2. 离散位置式 PID 公式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%8D%E7%BD%AE%E5%BC%8F-pid-%E5%AE%9E%E7%8E%B0%E9%80%9F%E5%BA%A6%E7%8E%AF"><span class="toc-number">1.3.</span> <span class="toc-text">3. 位置式 PID 实现速度环</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E8%BF%87%E7%A8%8B"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 实现过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 代码实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-%E7%94%B5%E6%9C%BA%E7%9B%B8%E5%BA%94%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">(a) 电机相应的数据结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#b-%E7%94%B5%E6%9C%BA%E6%97%8B%E8%BD%AC%E6%96%B9%E5%90%91%E7%9A%84%E5%88%A4%E6%96%AD"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">(b) 电机旋转方向的判断</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#c-%E7%94%B5%E6%9C%BA%E9%80%9F%E5%BA%A6%E6%A3%80%E6%B5%8B"><span class="toc-number">1.3.2.3.</span> <span class="toc-text">(c) 电机速度检测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#d-pid-%E7%9A%84%E8%B0%83%E8%8A%82%E5%91%A8%E6%9C%9F%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.3.2.4.</span> <span class="toc-text">(d) PID 的调节周期实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#e-pid-%E5%91%A8%E6%9C%9F%E6%80%A7%E8%B0%83%E8%8A%82%E5%AE%9E%E7%8E%B0%E9%80%9F%E5%BA%A6%E7%8E%AF"><span class="toc-number">1.3.2.5.</span> <span class="toc-text">(e) PID 周期性调节实现速度环</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#f-%E4%BD%8D%E7%BD%AE%E5%BC%8F-pid-%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.3.2.6.</span> <span class="toc-text">(f) 位置式 PID 实现</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pid-%E6%95%B4%E5%AE%9A%E6%96%B9%E6%B3%95"><span class="toc-number">1.4.</span> <span class="toc-text">4. PID 整定方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E8%88%AC%E8%B0%83%E8%8A%82%E6%B3%95"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.1 一般调节法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%83%E8%8A%82%E6%AD%A5%E9%AA%A4"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">4.1.1 调节步骤</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%B4%E7%95%8C%E6%AF%94%E4%BE%8B%E6%B3%95ziegler-nichols-%E5%B7%A5%E7%A8%8B%E6%95%B4%E5%AE%9A%E6%B3%95"><span class="toc-number">1.4.2.</span> <span class="toc-text">4.2
+临界比例法(Ziegler-Nichols 工程整定法)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%83%E8%8A%82%E6%AD%A5%E9%AA%A4-1"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">4.2.1 调节步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%83%E8%8A%82%E8%BF%87%E7%A8%8B"><span class="toc-number">1.4.2.2.</span> <span class="toc-text">4.2.2 调节过程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pid-%E6%95%B4%E5%AE%9A%E8%B4%A8%E9%87%8F"><span class="toc-number">1.5.</span> <span class="toc-text">5. PID 整定质量</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/08/11/%5BPython%5D%E5%88%97%E8%A1%A8/" title="Python列表"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/0f6019e15f1d8ae07e7e8ea16d242676.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python列表"/></a><div class="content"><a class="title" href="/2022/08/11/%5BPython%5D%E5%88%97%E8%A1%A8/" title="Python列表">Python列表</a><time datetime="2022-08-11T12:00:00.000Z" title="发表于 2022-08-11 20:00:00">2022-08-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/03/%5BGPS%5DGPS%E7%AE%80%E4%BB%8B/" title="GPS Basic"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/GPS.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GPS Basic"/></a><div class="content"><a class="title" href="/2022/08/03/%5BGPS%5DGPS%E7%AE%80%E4%BB%8B/" title="GPS Basic">GPS Basic</a><time datetime="2022-08-03T02:00:00.000Z" title="发表于 2022-08-03 10:00:00">2022-08-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/05/29/VNA%E6%A0%A1%E5%87%86/" title="VNA校准"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/VNA%20Through%20standard.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="VNA校准"/></a><div class="content"><a class="title" href="/2022/05/29/VNA%E6%A0%A1%E5%87%86/" title="VNA校准">VNA校准</a><time datetime="2022-05-29T02:00:00.000Z" title="发表于 2022-05-29 10:00:00">2022-05-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/05/22/%5BAudio%5Dwav%E9%9F%B3%E9%A2%91%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/" title="wav音频文件解析"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/wav.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="wav音频文件解析"/></a><div class="content"><a class="title" href="/2022/05/22/%5BAudio%5Dwav%E9%9F%B3%E9%A2%91%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/" title="wav音频文件解析">wav音频文件解析</a><time datetime="2022-05-22T02:00:00.000Z" title="发表于 2022-05-22 10:00:00">2022-05-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/04/%5Bfs%5DFatFS%E7%A7%BB%E6%A4%8D%E6%80%BB%E7%BB%93/" title="FatFS移植总结"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/FatFS%E7%A7%BB%E6%A4%8D%E5%AF%BC%E5%9B%BE.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="FatFS移植总结"/></a><div class="content"><a class="title" href="/2022/04/04/%5Bfs%5DFatFS%E7%A7%BB%E6%A4%8D%E6%80%BB%E7%BB%93/" title="FatFS移植总结">FatFS移植总结</a><time datetime="2022-04-04T11:00:00.000Z" title="发表于 2022-04-04 19:00:00">2022-04-04</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://raw.githubusercontent.com/Tresordie/PicBed/master/img/1211.png')"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2022 By simon yuan</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="I,LOVE,YOU" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

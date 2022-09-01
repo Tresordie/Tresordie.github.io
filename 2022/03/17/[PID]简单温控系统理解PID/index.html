@@ -1,0 +1,400 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>简单温控系统理解PID | 时光渐渐逝去</title><meta name="keywords" content="PID"><meta name="author" content="simon yuan"><meta name="copyright" content="simon yuan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="[PID]简单温控系统理解 PID 1. 实现目标  通过一个控制系统，控制一个温度调节系统将室内温度控制在一个特定的温度值(如：通过一个控制器实时控制温度调节器调节室内温度到 25C)  2. 无 PID 控制的控温系统 2.1 系统工作方式   以下框图为无 PID 控制的控温系统 控制器通过温度传感器的反馈实时判断温度是否达到要求并对温度调节系统进行实时调节">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简单温控系统理解PID">
+<meta property="og:url" content="https://tresordie.github.io/2022/03/17/[PID]%E7%AE%80%E5%8D%95%E6%B8%A9%E6%8E%A7%E7%B3%BB%E7%BB%9F%E7%90%86%E8%A7%A3PID/index.html">
+<meta property="og:site_name" content="时光渐渐逝去">
+<meta property="og:description" content="[PID]简单温控系统理解 PID 1. 实现目标  通过一个控制系统，控制一个温度调节系统将室内温度控制在一个特定的温度值(如：通过一个控制器实时控制温度调节器调节室内温度到 25C)  2. 无 PID 控制的控温系统 2.1 系统工作方式   以下框图为无 PID 控制的控温系统 控制器通过温度传感器的反馈实时判断温度是否达到要求并对温度调节系统进行实时调节">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/20210305095533.png">
+<meta property="article:published_time" content="2022-03-17T02:00:00.000Z">
+<meta property="article:modified_time" content="2022-09-01T12:14:35.803Z">
+<meta property="article:author" content="simon yuan">
+<meta property="article:tag" content="PID">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/20210305095533.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://tresordie.github.io/2022/03/17/[PID]%E7%AE%80%E5%8D%95%E6%B8%A9%E6%8E%A7%E7%B3%BB%E7%BB%9F%E7%90%86%E8%A7%A3PID/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '简单温控系统理解PID',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-01 20:14:35'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="时光渐渐逝去" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/me.JPG" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">73</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">22</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://raw.githubusercontent.com/Tresordie/PicBed/master/img/20210305095533.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">时光渐渐逝去</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">简单温控系统理解PID</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-03-17T02:00:00.000Z" title="发表于 2022-03-17 10:00:00">2022-03-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-09-01T12:14:35.803Z" title="更新于 2022-09-01 20:14:35">2022-09-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Algorithm/">Algorithm</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="简单温控系统理解PID"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="pid简单温控系统理解-pid">[PID]简单温控系统理解 PID</h2>
+<h3 id="实现目标">1. 实现目标</h3>
+<blockquote>
+<p>通过一个控制系统，控制一个温度调节系统将室内温度控制在一个特定的温度值(如：通过一个控制器实时控制温度调节器调节室内温度到
+25C)</p>
+</blockquote>
+<h3 id="无-pid-控制的控温系统">2. 无 PID 控制的控温系统</h3>
+<h4 id="系统工作方式">2.1 系统工作方式</h4>
+<blockquote>
+<ol type="1">
+<li>以下框图为无 PID 控制的控温系统</li>
+<li><font color='yellow'>控制器通过温度传感器的反馈实时判断温度是否达到要求并对温度调节系统进行实时调节</font></li>
+</ol>
+</blockquote>
+<h4 id="优缺点">2.2 优缺点</h4>
+<blockquote>
+<p>优点：控制方式简单，易于操作，可理解为<font color='yellow'>简单的位式控制算法</font></p>
+<p><strong><font color='yellow'>缺点：过度依赖于温度传感器的测量数据来进行温度控制调节，且温度控制误差较大</font></strong>，<font color='white'>如：当前控制器控制温度到了目标值后，就不会再进行控制，然后时候采集温度传感器获取到的温度值，当获取到的温度值不满足要求时，就会再次对温度调节系统进行控制，此种情况下，如果温度传感器温度检测速度慢或者控制器读取速度慢就会造成控制温度调节系统存在延迟，从而造成室内温度偏差大及波动大</font></p>
+</blockquote>
+<p><img
+src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/20210305095533.png" /></p>
+<h3 id="pid-算法控温">3. PID 算法控温</h3>
+<h4 id="pid-温控系统">3.1 PID 温控系统</h4>
+<blockquote>
+<ol type="1">
+<li>PID 温控系统框图如下</li>
+<li><strong><font color='orange'>Sv 为设定值，Pv 为传感器采集值，偏差为
+(Sv - Pv)</font></strong></li>
+<li><strong><font color='yellow'>综合历史偏差，当前偏差及最近偏差处理后输出以控制温度调节系统对温度进行调节</font></strong></li>
+</ol>
+</blockquote>
+<p><img
+src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/20210305102816.png" /></p>
+<h4 id="pid-是什么">3.2 PID 是什么</h4>
+<blockquote>
+<ol type="1">
+<li>PID
+是<strong>proportional–integral–derivative</strong>这三个单词的缩写，即
+<font color='red'><strong>比例 - 积分 - 微分</strong></font></li>
+<li>通过 3 个方面的控制精确实现预期设定</li>
+</ol>
+</blockquote>
+<h4 id="偏差概念">3.3 偏差概念</h4>
+<blockquote>
+<ol type="1">
+<li><font color='yellow'>从开机以来，传感器的所有采样点数据序列</font><br />
+<span class="math display">\[
+\begin{aligned}
+&amp; 假如以下数据序列为，从开机以来，传感器的所有采样点数据 \\
+&amp; x1, x2, x3, ...... x_k-_1, x_k
+\end{aligned}
+\]</span></li>
+<li><font color='yellow'>当前偏差：当前某个时间点的温度误差</font><br />
+<span class="math display">\[
+\begin{aligned}
+&amp; E_k = S_v - X_k \\
+&amp; 采样点k时间点的误差值
+\end{aligned}
+\]</span></li>
+<li><font color='yellow'>历史偏差：过去历史过程中的所有偏差</font><br />
+<span class="math display">\[
+\begin{aligned}
+&amp; 1. 历史偏差序列 E_1, E_2, E_3,.......E_k-_1, E_k \\
+&amp; 2. 历史累计偏差 S_k = E_1+E_2+E_3+......+E_k-_1+E_k
+\end{aligned}
+\]</span></li>
+<li><font color='yellow'>最近偏差：最近两次的偏差之差</font><br />
+<span class="math display">\[
+\begin{aligned}
+&amp; D_k= E_k - E_k-_1 \\
+&amp; D_k &gt; 0: 误差有增大趋势 \\
+&amp; D_k = 0: 误差幅度保持 \\
+&amp; D_k &lt; 0: 误差有减小趋势 \\
+\end{aligned}
+\]</span></li>
+</ol>
+</blockquote>
+<h3 id="比例控制">4. 比例控制</h3>
+<blockquote>
+<ol type="1">
+<li><p>一般系统中都是通过 pwm
+不同占空比方式来对系统进行强弱输出的控制调节，pwm
+占空比大小正比于控制输出的强弱</p></li>
+<li><p>比例控制即是通过实际误差的大小来调节 pwm
+占空比大小以实现快速控制及达到预期值</p></li>
+<li><p><strong><font color='yellow'>比例控制的公式可以下面表示：</font></strong><br />
+<span class="math display">\[
+\begin{aligned}
+Pout = K_pE_k + OUT_0 \\
+(可看作是线性比例控制)
+\end{aligned}
+\]</span></p></li>
+<li><p>优点：</p>
+<ul>
+<li>实时控制，控制简单</li>
+</ul></li>
+<li><p>缺点：</p>
+<ul>
+<li>有误差才控制，无误差不进行控制</li>
+</ul></li>
+</ol>
+</blockquote>
+<h3 id="积分算法">5. 积分算法</h3>
+<blockquote>
+<ol type="1">
+<li><p>通过线性模型，利用历史累积误差对输出进行控制</p></li>
+<li><p>积分算法模型<br />
+<span class="math display">\[
+\begin{aligned}
+Iout = K_pS_k + OUT_0 \\
+(历史累积误差的控制模型)
+\end{aligned}
+\]</span></p></li>
+<li><p>积分算法的意义</p>
+<ul>
+<li>从历史累积误差的角度，预测性的对当前系统进行控制</li>
+<li>历史累计误差越大，控制强度就越大</li>
+</ul></li>
+</ol>
+</blockquote>
+<h3 id="微分算法">6. 微分算法</h3>
+<blockquote>
+<ol type="1">
+<li><p>通过线性模型，利用最近偏差对输出进行控制</p></li>
+<li><p>微分算法模型<br />
+<span class="math display">\[
+\begin{aligned}
+Dout = K_pD_k + OUT_0 \\
+其中：D_k = E_k - E_k-_1
+\end{aligned}
+\]</span></p></li>
+</ol>
+</blockquote>
+<h3 id="pid-的数学模型">7. PID 的数学模型</h3>
+<p><span class="math display">\[
+PIDout = Kp(E_k + S_k + D_k) + OUT_0
+\]</span></p>
+<h3 id="位置式-pid">8. 位置式 PID</h3>
+<h4 id="积分算法-1">8.1 积分算法</h4>
+<blockquote>
+<ol type="1">
+<li><p>Sk 的处理(积分算法)<br />
+<span class="math display">\[
+\begin{aligned}
+&amp; S_k = \frac1 { T_i } *\sum_ { k=0 } ^nE_k*T \\
+&amp; { T:采样周期（计算周期）} \\
+&amp; {
+T_i:积分常数（积分时间），Pout与Iout共同作用的这一段时间叫积分时间常数 }
+\\
+\end{aligned}
+\]</span></p></li>
+<li><p>其它问题点</p>
+<ul>
+<li><font color='red'>第一次到达目标值，且之前都是朝着误差
+减少的方向发展，由于历史误差还存在，故而积分算法还会发生作用，在第一次达到目标后仍在进行处理，故而会出现过冲或超调现象</font></li>
+<li><font color='red'>在第一次到达目标前，需进行积分分离，以较小过冲现象或超调现象(Ti
+设定为无穷大，70%~80%目标值时加入)</font></li>
+<li><font color='red'>积分项在比例项(比例控制)失效时，继续参与控制</font></li>
+</ul></li>
+</ol>
+</blockquote>
+<h4 id="微分算法-1">8.2 微分算法</h4>
+<blockquote>
+<ol type="1">
+<li><p>Dk 的处理(微分算法)<br />
+<span class="math display">\[
+\begin{aligned}
+&amp; D_k = T_d * \frac { E_k - E_k-_1 } { T } \\
+&amp; T ：PID的采样周期（计算周期）\\
+&amp; T_d : 微分常数(可以通过去掉I_k来分析)
+\end{aligned}
+\]</span></p></li>
+<li><p>特征</p>
+<ul>
+<li>Dk 将近两次的偏差斜率调大，以便 Pk
+部分更大调节以快速地加大抑制效果</li>
+</ul></li>
+</ol>
+<ul>
+<li><font color='red'>如果采样周期太大，Dk
+会变小，如果实际上在短时间采样到的数据发生了剧烈变化，但由于采样周期太大，造成采样数据没有对剧烈变化进行反应而无法更好的对系统进行控制</font></li>
+</ul>
+</blockquote>
+<h3 id="增量式-pid">9. 增量式 PID</h3>
+<blockquote>
+<ol type="1">
+<li><p>增量式 PID：计算出的是控制量的增加值</p></li>
+<li><p>模型如下：<br />
+<span class="math display">\[
+\begin{aligned}
+&amp; \Delta\_out = Out_k -
+Out_k-_1   (备注：K时间点相对于K-1时间点输出增量值) \\
+&amp; 代入之前的位置式PID式子中进行计算得到：\\
+&amp; \Delta\_out = K_p(E_k - E_k-_1) + K_p \frac { T } { T_i }
+*E_k+K_p* \frac { T_D } { T } *(E_k - 2*E_k-_1 + E_k-_2) \\
+&amp; 备注: E_k:为本次偏差值，E_k-_1: 为上次偏差值，E_k-_2:
+为上上次偏差值
+\end{aligned}
+\]</span></p></li>
+</ol>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">simon yuan</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://tresordie.github.io/2022/03/17/[PID]%E7%AE%80%E5%8D%95%E6%B8%A9%E6%8E%A7%E7%B3%BB%E7%BB%9F%E7%90%86%E8%A7%A3PID/">https://tresordie.github.io/2022/03/17/[PID]%E7%AE%80%E5%8D%95%E6%B8%A9%E6%8E%A7%E7%B3%BB%E7%BB%9F%E7%90%86%E8%A7%A3PID/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://tresordie.github.io" target="_blank">时光渐渐逝去</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/PID/">PID</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/03/18/%5BPID%5DBLDC%E5%A2%9E%E9%87%8F%E5%BC%8FPID/"><img class="prev-cover" src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/20220319103828.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">BLDC增量式PID</div></div></a></div><div class="next-post pull-right"><a href="/2022/03/14/%5BSTM32%5DCLion%E6%90%AD%E5%BB%BASTM32%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/"><img class="next-cover" src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/image-20220314210137261.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CLion搭建STM32开发环境</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/03/20/BLDC%E4%B8%B2%E7%BA%A7PID(%E4%BD%8D%E7%BD%AE%E5%BC%8FPID)%E6%8E%A7%E5%88%B6/" title="BLDC串级PID(位置式PID)控制"><img class="cover" src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/image-20220321005207981.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-20</div><div class="title">BLDC串级PID(位置式PID)控制</div></div></a></div><div><a href="/2022/03/18/%5BPID%5DBLDC%E4%BD%8D%E7%BD%AE%E5%BC%8FPID/" title="BLDC位置式PID"><img class="cover" src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/20220319101047.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-18</div><div class="title">BLDC位置式PID</div></div></a></div><div><a href="/2022/03/20/%5BPID%5DBLDC%E4%BD%8D%E7%BD%AE%E7%8E%AFPID(%E4%BD%8D%E7%BD%AE%E5%BC%8F)%E6%8E%A7%E5%88%B6/" title="BLDC位置环PID(位置式)控制"><img class="cover" src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/1211.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-20</div><div class="title">BLDC位置环PID(位置式)控制</div></div></a></div><div><a href="/2022/03/20/%5BPID%5DBLDC%E4%BD%8D%E7%BD%AE%E7%8E%AFPID(%E5%A2%9E%E9%87%8F%E5%BC%8F)%E6%8E%A7%E5%88%B6/" title="BLDC位置环(增量式)PID控制"><img class="cover" src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/1211.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-20</div><div class="title">BLDC位置环(增量式)PID控制</div></div></a></div><div><a href="/2022/03/18/%5BPID%5DBLDC%E5%A2%9E%E9%87%8F%E5%BC%8FPID/" title="BLDC增量式PID"><img class="cover" src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/20220319103828.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-18</div><div class="title">BLDC增量式PID</div></div></a></div><div><a href="/2022/03/19/%5BPID%5DBLDC%E9%80%9F%E5%BA%A6%E7%8E%AFPID(%E4%BD%8D%E7%BD%AE%E5%BC%8F)%E6%8E%A7%E5%88%B6/" title="BLDC速度环PID(位置式)控制"><img class="cover" src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/image-20220319180348882.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-19</div><div class="title">BLDC速度环PID(位置式)控制</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/me.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">simon yuan</div><div class="author-info__description">记录分享学习、生活的地方</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">73</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">22</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://gitee.com/simonyuan2019"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://gitee.com/simonyuan2019" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:Tresordie@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">IoT物联网/嵌入式学习探讨</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#pid%E7%AE%80%E5%8D%95%E6%B8%A9%E6%8E%A7%E7%B3%BB%E7%BB%9F%E7%90%86%E8%A7%A3-pid"><span class="toc-number">1.</span> <span class="toc-text">[PID]简单温控系统理解 PID</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E7%9B%AE%E6%A0%87"><span class="toc-number">1.1.</span> <span class="toc-text">1. 实现目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0-pid-%E6%8E%A7%E5%88%B6%E7%9A%84%E6%8E%A7%E6%B8%A9%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.2.</span> <span class="toc-text">2. 无 PID 控制的控温系统</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E5%B7%A5%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 系统工作方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 优缺点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pid-%E7%AE%97%E6%B3%95%E6%8E%A7%E6%B8%A9"><span class="toc-number">1.3.</span> <span class="toc-text">3. PID 算法控温</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#pid-%E6%B8%A9%E6%8E%A7%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 PID 温控系统</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pid-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 PID 是什么</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%81%8F%E5%B7%AE%E6%A6%82%E5%BF%B5"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.3 偏差概念</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%94%E4%BE%8B%E6%8E%A7%E5%88%B6"><span class="toc-number">1.4.</span> <span class="toc-text">4. 比例控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%AF%E5%88%86%E7%AE%97%E6%B3%95"><span class="toc-number">1.5.</span> <span class="toc-text">5. 积分算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AE%E5%88%86%E7%AE%97%E6%B3%95"><span class="toc-number">1.6.</span> <span class="toc-text">6. 微分算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pid-%E7%9A%84%E6%95%B0%E5%AD%A6%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.7.</span> <span class="toc-text">7. PID 的数学模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%8D%E7%BD%AE%E5%BC%8F-pid"><span class="toc-number">1.8.</span> <span class="toc-text">8. 位置式 PID</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A7%AF%E5%88%86%E7%AE%97%E6%B3%95-1"><span class="toc-number">1.8.1.</span> <span class="toc-text">8.1 积分算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%AE%E5%88%86%E7%AE%97%E6%B3%95-1"><span class="toc-number">1.8.2.</span> <span class="toc-text">8.2 微分算法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A2%9E%E9%87%8F%E5%BC%8F-pid"><span class="toc-number">1.9.</span> <span class="toc-text">9. 增量式 PID</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/08/11/%5BPython%5D%E5%88%97%E8%A1%A8/" title="Python列表"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/0f6019e15f1d8ae07e7e8ea16d242676.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python列表"/></a><div class="content"><a class="title" href="/2022/08/11/%5BPython%5D%E5%88%97%E8%A1%A8/" title="Python列表">Python列表</a><time datetime="2022-08-11T12:00:00.000Z" title="发表于 2022-08-11 20:00:00">2022-08-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/03/%5BGPS%5DGPS%E7%AE%80%E4%BB%8B/" title="GPS Basic"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/GPS.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GPS Basic"/></a><div class="content"><a class="title" href="/2022/08/03/%5BGPS%5DGPS%E7%AE%80%E4%BB%8B/" title="GPS Basic">GPS Basic</a><time datetime="2022-08-03T02:00:00.000Z" title="发表于 2022-08-03 10:00:00">2022-08-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/05/29/VNA%E6%A0%A1%E5%87%86/" title="VNA校准"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/VNA%20Through%20standard.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="VNA校准"/></a><div class="content"><a class="title" href="/2022/05/29/VNA%E6%A0%A1%E5%87%86/" title="VNA校准">VNA校准</a><time datetime="2022-05-29T02:00:00.000Z" title="发表于 2022-05-29 10:00:00">2022-05-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/05/22/%5BAudio%5Dwav%E9%9F%B3%E9%A2%91%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/" title="wav音频文件解析"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/wav.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="wav音频文件解析"/></a><div class="content"><a class="title" href="/2022/05/22/%5BAudio%5Dwav%E9%9F%B3%E9%A2%91%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/" title="wav音频文件解析">wav音频文件解析</a><time datetime="2022-05-22T02:00:00.000Z" title="发表于 2022-05-22 10:00:00">2022-05-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/04/%5Bfs%5DFatFS%E7%A7%BB%E6%A4%8D%E6%80%BB%E7%BB%93/" title="FatFS移植总结"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/FatFS%E7%A7%BB%E6%A4%8D%E5%AF%BC%E5%9B%BE.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="FatFS移植总结"/></a><div class="content"><a class="title" href="/2022/04/04/%5Bfs%5DFatFS%E7%A7%BB%E6%A4%8D%E6%80%BB%E7%BB%93/" title="FatFS移植总结">FatFS移植总结</a><time datetime="2022-04-04T11:00:00.000Z" title="发表于 2022-04-04 19:00:00">2022-04-04</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://raw.githubusercontent.com/Tresordie/PicBed/master/img/20210305095533.png')"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2022 By simon yuan</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="I,LOVE,YOU" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,448 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>VNA校准 | 时光渐渐逝去</title><meta name="keywords" content="VNA"><meta name="author" content="simon yuan"><meta name="copyright" content="simon yuan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="[仪器]VNA校准 1. 为什么需要进⾏校准？   在所有的RF测量中， VNA测量求有最⾼的准确性及可重复性，故⽽对仪器有校准要求   2. 有哪些类型的误差源？  ⼀般来讲，在VNA测量过程中⼀般有3种误差源, ⽆论哪种误差，都可能造成幅度或相位不准确(即⽮量)  drift errors 漂移误差   漂移误差是在校准后环境变化所造成(主要是温度变化造成的)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VNA校准">
+<meta property="og:url" content="https://tresordie.github.io/2022/05/29/VNA%E6%A0%A1%E5%87%86/index.html">
+<meta property="og:site_name" content="时光渐渐逝去">
+<meta property="og:description" content="[仪器]VNA校准 1. 为什么需要进⾏校准？   在所有的RF测量中， VNA测量求有最⾼的准确性及可重复性，故⽽对仪器有校准要求   2. 有哪些类型的误差源？  ⼀般来讲，在VNA测量过程中⼀般有3种误差源, ⽆论哪种误差，都可能造成幅度或相位不准确(即⽮量)  drift errors 漂移误差   漂移误差是在校准后环境变化所造成(主要是温度变化造成的)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/Tresordie/PicBed/master/VNA%20Through%20standard.png">
+<meta property="article:published_time" content="2022-05-29T02:00:00.000Z">
+<meta property="article:modified_time" content="2022-09-01T12:14:35.798Z">
+<meta property="article:author" content="simon yuan">
+<meta property="article:tag" content="VNA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Tresordie/PicBed/master/VNA%20Through%20standard.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://tresordie.github.io/2022/05/29/VNA%E6%A0%A1%E5%87%86/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'VNA校准',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-01 20:14:35'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="时光渐渐逝去" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/me.JPG" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">73</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">22</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://raw.githubusercontent.com/Tresordie/PicBed/master/VNA%20Through%20standard.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">时光渐渐逝去</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">VNA校准</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-05-29T02:00:00.000Z" title="发表于 2022-05-29 10:00:00">2022-05-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-09-01T12:14:35.798Z" title="更新于 2022-09-01 20:14:35">2022-09-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Equipments/">Equipments</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="VNA校准"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="仪器vna校准">[仪器]VNA校准</h1>
+<h2 id="为什么需要进校准">1. 为什么需要进⾏校准？</h2>
+<blockquote>
+<ol type="1">
+<li>在所有的RF测量中，
+VNA测量求有最⾼的准确性及可重复性，故⽽对仪器有校准要求</li>
+</ol>
+</blockquote>
+<h2 id="有哪些类型的误差源">2. 有哪些类型的误差源？</h2>
+<blockquote>
+<p>⼀般来讲，在VNA测量过程中⼀般有3种误差源,
+⽆论哪种误差，都可能造成幅度或相位不准确(即⽮量)</p>
+<ol type="a">
+<li>drift errors 漂移误差</li>
+</ol>
+<ul>
+<li><p>漂移误差是在校准后环境变化所造成(主要是温度变化造成的)</p></li>
+<li><p>可以通过控制测试境且让仪器有时间预热</p></li>
+<li><p>可以在变化的环境中执⾏新的校准来消除漂移误差</p></li>
+</ul>
+<p><font color ='red'>[总结]即使采取上述的措施,
+也不可能完全的消除漂移误差，也只能是尽可能的减⼩漂移误差</font></p>
+<ol start="2" type="a">
+<li>random errors 随机误差</li>
+</ol>
+<ul>
+<li><p>随机误差主要是由测试环境搭建引起的(设备噪⾳，测量操作，cables/connector等等)</p></li>
+<li><p>随机误差随时间推移⽽变化，不可重复且不可预料</p></li>
+<li><p>可以通过⾼精度仪器以及好的操作实践可以最⼤化的减⼩随机误差，但是⽆法消除</p></li>
+</ul>
+<ol start="3" type="a">
+<li>systematic errors 系统误差</li>
+</ol>
+<ul>
+<li><p>系统误差是可重复，可预测且不会随时间发⽣变化</p></li>
+<li><p>还有⼀部分原因是VNA及测试设置中有⼀些⾮理想器件引起(VNA中的缺陷，e.g.,
+例如定向耦合器的⽅向 性不完整；还有Cable loss；阻抗不匹配)</p></li>
+<li><p>系统误差⼏乎完全可以通过校准的⽅式消除</p></li>
+</ul>
+</blockquote>
+<h2 id="什么是calibration">3. 什么是Calibration?</h2>
+<blockquote>
+<ol type="a">
+<li><p>Calibration的⽬的是从测量结果中剔除系统误差</p></li>
+<li><p>校准的步骤：</p></li>
+</ol>
+<p>​ (1) 基于测量环境的搭建及期望的结果来选择校准类型</p>
+<p>​ (2) 连接校准标准件到相应的位置</p>
+<p>​ (3) 运⾏校准程序并测量响应(通常需要进⾏多个步骤的操作)</p>
+<p>​ (4) 测量DUT时，校准数据被⽤于纠正测量结果</p>
+</blockquote>
+<h2 id="measurement-calibration-vs-instrument-calibration">4.
+Measurement calibration VS Instrument calibration</h2>
+<blockquote>
+<ol type="a">
+<li><p>Measurement
+calibration是⽤于消除测量的系统误差，由⽤户⾃⾏校准(会频繁使⽤)</p></li>
+<li><p>Instrument
+calibration⽤于设备的校准，主要是为了鉴定仪器是否是以其⾃身spec运⾏的，⽐如我想要仪器
+输出10dBm，那么⽤户控制仪器输出10dBm时，仪器实 际上是否输出了10dBm.
+⼀般情况下都是由专⻔的服
+务机构或者校准中⼼执⾏校准的，可能间隔⼏年才校准⼀次</p></li>
+</ol>
+</blockquote>
+<h2 id="calibration-or-reference-plane校准或参考平">5. Calibration or
+reference plane(校准或参考平⾯)</h2>
+<blockquote>
+<ol type="a">
+<li><p>校准平⾯或者参考平⾯是在校准时才考虑的</p></li>
+<li><p>校准时，DUT不能直接连接到VNA的ports</p></li>
+<li><p>校准时要避免所有对校准或者参考平⾯的影响</p></li>
+</ol>
+</blockquote>
+<p><img
+src="https://raw.githubusercontent.com/Tresordie/PicBed/master/VNA%20reference%20plane.png" /></p>
+<h2 id="校准标准件">6. 校准标准件</h2>
+<blockquote>
+<ol type="a">
+<li><p>校准标准件⼀般需要单独购买，其收集在⼀个校准套件⾥⾯</p></li>
+<li><p>校准套件是⼀套⾼精度且已知幅度和相位响应的终端或者耦合器</p></li>
+</ol>
+<p>​ (1) 标准间数据包含在校准套件定义的⽂件中</p>
+<p>​ (2) 定义通常是预加载到仪器端，或者通过USB或者其其它接⼝导⼊</p>
+<ol start="3" type="a">
+<li>标准件被连接到校准或参考平⾯，在校准过程中进⾏测量</li>
+</ol>
+</blockquote>
+<h2 id="常的校准标准及说明">7. 常⽤的校准标准及说明</h2>
+<blockquote>
+<ol type="a">
+<li>4种最常⽤的校准标准</li>
+</ol>
+<ul>
+<li><p>Through(T)</p></li>
+<li><p>Open(O)</p></li>
+<li><p>Short(S)</p></li>
+<li><p>Match(M) 也叫 Load</p></li>
+</ul>
+<ol start="2" type="a">
+<li>校准说明</li>
+</ol>
+<p>​ (1)
+现实中的校准套件并不是理想的，特别是在⼀个宽频率范围(⽐如在100MHz以上的开路电容就会增加，所
+以不同开路套件测出的值会有差别，所以需要对此标准需
+要有专⻔的数据描述)</p>
+<p>​ (2) 特定的校准标准需要有数据进⾏描述说明</p>
+</blockquote>
+<p><img
+src="https://raw.githubusercontent.com/Tresordie/PicBed/master/VNA%20Through%20standard.png"
+alt="VNA Through standard" /></p>
+<p><img
+src="https://raw.githubusercontent.com/Tresordie/PicBed/master/VNA%20ECal.png"
+alt="VNA ECal" /></p>
+<h2 id="校准单元">8. 校准单元</h2>
+<blockquote>
+<ol type="a">
+<li><p>校准套件有常规的分⽴器件的校准套件或者是集成了多种校准⽅式的T型校准件
+(1个T型件包含了Open/Short/Through/Match校准)</p></li>
+<li><p>还有⾃动校准器</p></li>
+</ol>
+<p>​ (1) ⾃动校准器中包含了校准标准件，在校准过程中内部电控切换，通常是
+可以被VNA控制(通常是通过USB)</p>
+<p>​ (2)
+内部标准件⽤于校准的数据被存储在⾃动校准单元⾥⾯，可以被VAN读取</p>
+<p>​ (3) ⾃动校准的引⼊最⼩化了操作⼈员的介⼊，且校准过程叫⼈⼯校准更快，
+更少有机会有操作失误(如连接错误的校准件)，相对于分⽴校准件，其磨
+损程度更⼩</p>
+</blockquote>
+<h2 id="什么是校准类型">9. 什么是校准类型</h2>
+<blockquote>
+<ol type="a">
+<li>校准类型定义了我们需要连接哪些校准标准件</li>
+</ol>
+</blockquote>
+<h2 id="校准类型的选择的考虑因素">10. 校准类型的选择的考虑因素</h2>
+<blockquote>
+<p>校准类型基于⼀下因素来选择：</p>
+<ol type="a">
+<li><p>端⼝数量</p></li>
+<li><p>测量的⽅向性</p></li>
+<li><p>要求的准确等级</p></li>
+<li><p>时间要求</p></li>
+<li><p>可⽤的校准标准件</p></li>
+</ol>
+</blockquote>
+<h2 id="校准类型">11. 校准类型</h2>
+<blockquote>
+<ol type="a">
+<li><p>Reﬂection Normalization - 反射归⼀化</p></li>
+<li><p>Full One Port Calibration(OSM) - 全⼀端⼝校准</p></li>
+<li><p>Transmission Normalization - 传输归⼀化</p></li>
+<li><p>One Path Two Port Calibration - 两端⼝⼀个通路校准</p></li>
+<li><p>Full Two Port Calibration(TOSM) - 两端⼝全校准</p></li>
+<li><p>Full Two Port Calibration(UOSM) - 两端⼝全校准</p></li>
+</ol>
+</blockquote>
+<h2 id="one-port-calibration单端校准">12. One Port
+Calibration(单端⼝校准)</h2>
+<blockquote>
+<ol type="a">
+<li>⽤于反射测量的单端⼝校准</li>
+</ol>
+<ol type="1">
+<li>Full one-port calibration(OSM - Open/Short/Match)</li>
+</ol>
+<ul>
+<li>校准速度慢，但是有更⾼的精度</li>
+<li>要求open, short, match校准</li>
+</ul>
+<ol start="2" type="1">
+<li>归⼀化校准</li>
+</ol>
+<ul>
+<li><p>校准速度更快，但是精确度低</p></li>
+<li><p>只需要⼀次校准，Open或者Short校准</p></li>
+</ul>
+</blockquote>
+<p><img
+src="https://raw.githubusercontent.com/Tresordie/PicBed/master/VNA%20Calibration.png"
+alt="VNA Calibration" /></p>
+<h2 id="two-port-calibration双端校准">13. Two port
+calibration(双端⼝校准)</h2>
+<blockquote>
+<ol type="a">
+<li><p>双端⼝校准适⽤于传输测量</p></li>
+<li><p>校准⽅式</p></li>
+</ol>
+<ul>
+<li><p>Normalization 归⼀化校准</p>
+<ol type="1">
+<li><p>需要连接Through</p></li>
+<li><p>可以进⾏单向或者双向校准</p></li>
+</ol></li>
+<li><p>One path two ports 双端⼝单向</p>
+<ol type="1">
+<li>Full one-port OSM(Open/Short/Match) + Transmission normalization
+—&gt; 适合单向传输</li>
+</ol></li>
+<li><p>Full two port calibration 双端⼝全校准</p>
+<ul>
+<li><p>TOSM: Through Open/Short/Match</p>
+<ol type="1">
+<li><p>TOSM(Through/Open/Short/Match)：双端⼝校准中最常⽤的校准</p></li>
+<li><p>应⽤场合为: ①双端⼝的反射测量. ②双向传输测量 I</p></li>
+<li><p>校准步骤要求：需要进⾏8次扫描
+①每个端⼝都要进⾏单端⼝的OSM(Open/Short/Match)标准件扫描，这就相当于6次了
+②双向的Through标准件测试，这就相当于两次了</p></li>
+<li><p>校准完成后，就可以进⾏S参数的测量了;
+TOSM校准的弱点在于校准使⽤的时间较⻓，需要8次扫描
+才能完成，如上描述.</p></li>
+</ol></li>
+<li><p>UOSM: Unknown Open/Short/Match</p>
+<ol type="1">
+<li><p>通常使⽤⼀个通⽤的RF
+coupler来取代校准套件中的Through标准件</p></li>
+<li><p>UOSM有⼀个特征是：双向特征完全相同，即S 21 == S12</p></li>
+<li><p>UOSM对于有着不同类型的接头是有帮助的，如⼀端为SMA接⼝，另⼀端为不同类型接⼝</p></li>
+</ol></li>
+</ul></li>
+</ul>
+</blockquote>
+<h2 id="isolation-measurement-校准法">14. Isolation measurement
+校准⽅法</h2>
+<blockquote>
+<ol type="a">
+<li><p>Isolation measurement ⽅法是对 Through calibration
+校准的补充</p></li>
+<li><p>Isolation measurement
+⽅法主要是是测量通道信号泄漏及对相邻通道的串扰</p></li>
+<li><p>Isolation measurement 没有相应的物理校准标准</p></li>
+<li><p>通常的校准⽅法是在测试端⼝终端出接 50ohm 的终端负载</p></li>
+<li><p>在绝⼤多书的VNA的测量中，这种错误(泄漏及串扰)并不是⼀个重⼤的错误源</p></li>
+</ol>
+</blockquote>
+<h2 id="什么时候需要进户校准">15. 什么时候需要进⾏⽤户校准</h2>
+<blockquote>
+<ol type="a">
+<li><p>⽤户重新设置了频率范围</p></li>
+<li><p>对于DUT的连接发⽣了变化(如，RF Cable
+Length发⽣了变化，Adaptor等等发⽣了变化)</p></li>
+<li><p>使⽤的VNA port发⽣了变化</p></li>
+</ol>
+</blockquote>
+<p>[参考] 罗德施瓦茨的VNA校准介绍</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">simon yuan</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://tresordie.github.io/2022/05/29/VNA%E6%A0%A1%E5%87%86/">https://tresordie.github.io/2022/05/29/VNA%E6%A0%A1%E5%87%86/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://tresordie.github.io" target="_blank">时光渐渐逝去</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/VNA/">VNA</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/08/03/%5BGPS%5DGPS%E7%AE%80%E4%BB%8B/"><img class="prev-cover" src="https://raw.githubusercontent.com/Tresordie/PicBed/master/GPS.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">GPS Basic</div></div></a></div><div class="next-post pull-right"><a href="/2022/05/22/%5BAudio%5Dwav%E9%9F%B3%E9%A2%91%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/"><img class="next-cover" src="https://raw.githubusercontent.com/Tresordie/PicBed/master/wav.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">wav音频文件解析</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/me.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">simon yuan</div><div class="author-info__description">记录分享学习、生活的地方</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">73</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">22</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://gitee.com/simonyuan2019"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://gitee.com/simonyuan2019" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:Tresordie@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">IoT物联网/嵌入式学习探讨</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%AA%E5%99%A8vna%E6%A0%A1%E5%87%86"><span class="toc-number">1.</span> <span class="toc-text">[仪器]VNA校准</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E8%BF%9B%E6%A0%A1%E5%87%86"><span class="toc-number">1.1.</span> <span class="toc-text">1. 为什么需要进⾏校准？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%89%E5%93%AA%E4%BA%9B%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%AF%AF%E5%B7%AE%E6%BA%90"><span class="toc-number">1.2.</span> <span class="toc-text">2. 有哪些类型的误差源？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFcalibration"><span class="toc-number">1.3.</span> <span class="toc-text">3. 什么是Calibration?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#measurement-calibration-vs-instrument-calibration"><span class="toc-number">1.4.</span> <span class="toc-text">4.
+Measurement calibration VS Instrument calibration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#calibration-or-reference-plane%E6%A0%A1%E5%87%86%E6%88%96%E5%8F%82%E8%80%83%E5%B9%B3"><span class="toc-number">1.5.</span> <span class="toc-text">5. Calibration or
+reference plane(校准或参考平⾯)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%A1%E5%87%86%E6%A0%87%E5%87%86%E4%BB%B6"><span class="toc-number">1.6.</span> <span class="toc-text">6. 校准标准件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%9A%84%E6%A0%A1%E5%87%86%E6%A0%87%E5%87%86%E5%8F%8A%E8%AF%B4%E6%98%8E"><span class="toc-number">1.7.</span> <span class="toc-text">7. 常⽤的校准标准及说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%A1%E5%87%86%E5%8D%95%E5%85%83"><span class="toc-number">1.8.</span> <span class="toc-text">8. 校准单元</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%A0%A1%E5%87%86%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.9.</span> <span class="toc-text">9. 什么是校准类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%A1%E5%87%86%E7%B1%BB%E5%9E%8B%E7%9A%84%E9%80%89%E6%8B%A9%E7%9A%84%E8%80%83%E8%99%91%E5%9B%A0%E7%B4%A0"><span class="toc-number">1.10.</span> <span class="toc-text">10. 校准类型的选择的考虑因素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%A1%E5%87%86%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.11.</span> <span class="toc-text">11. 校准类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#one-port-calibration%E5%8D%95%E7%AB%AF%E6%A0%A1%E5%87%86"><span class="toc-number">1.12.</span> <span class="toc-text">12. One Port
+Calibration(单端⼝校准)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#two-port-calibration%E5%8F%8C%E7%AB%AF%E6%A0%A1%E5%87%86"><span class="toc-number">1.13.</span> <span class="toc-text">13. Two port
+calibration(双端⼝校准)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#isolation-measurement-%E6%A0%A1%E5%87%86%E6%B3%95"><span class="toc-number">1.14.</span> <span class="toc-text">14. Isolation measurement
+校准⽅法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E9%9C%80%E8%A6%81%E8%BF%9B%E6%88%B7%E6%A0%A1%E5%87%86"><span class="toc-number">1.15.</span> <span class="toc-text">15. 什么时候需要进⾏⽤户校准</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/08/11/%5BPython%5D%E5%88%97%E8%A1%A8/" title="Python列表"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/0f6019e15f1d8ae07e7e8ea16d242676.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python列表"/></a><div class="content"><a class="title" href="/2022/08/11/%5BPython%5D%E5%88%97%E8%A1%A8/" title="Python列表">Python列表</a><time datetime="2022-08-11T12:00:00.000Z" title="发表于 2022-08-11 20:00:00">2022-08-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/03/%5BGPS%5DGPS%E7%AE%80%E4%BB%8B/" title="GPS Basic"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/GPS.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GPS Basic"/></a><div class="content"><a class="title" href="/2022/08/03/%5BGPS%5DGPS%E7%AE%80%E4%BB%8B/" title="GPS Basic">GPS Basic</a><time datetime="2022-08-03T02:00:00.000Z" title="发表于 2022-08-03 10:00:00">2022-08-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/05/29/VNA%E6%A0%A1%E5%87%86/" title="VNA校准"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/VNA%20Through%20standard.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="VNA校准"/></a><div class="content"><a class="title" href="/2022/05/29/VNA%E6%A0%A1%E5%87%86/" title="VNA校准">VNA校准</a><time datetime="2022-05-29T02:00:00.000Z" title="发表于 2022-05-29 10:00:00">2022-05-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/05/22/%5BAudio%5Dwav%E9%9F%B3%E9%A2%91%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/" title="wav音频文件解析"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/wav.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="wav音频文件解析"/></a><div class="content"><a class="title" href="/2022/05/22/%5BAudio%5Dwav%E9%9F%B3%E9%A2%91%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/" title="wav音频文件解析">wav音频文件解析</a><time datetime="2022-05-22T02:00:00.000Z" title="发表于 2022-05-22 10:00:00">2022-05-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/04/%5Bfs%5DFatFS%E7%A7%BB%E6%A4%8D%E6%80%BB%E7%BB%93/" title="FatFS移植总结"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/FatFS%E7%A7%BB%E6%A4%8D%E5%AF%BC%E5%9B%BE.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="FatFS移植总结"/></a><div class="content"><a class="title" href="/2022/04/04/%5Bfs%5DFatFS%E7%A7%BB%E6%A4%8D%E6%80%BB%E7%BB%93/" title="FatFS移植总结">FatFS移植总结</a><time datetime="2022-04-04T11:00:00.000Z" title="发表于 2022-04-04 19:00:00">2022-04-04</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://raw.githubusercontent.com/Tresordie/PicBed/master/VNA%20Through%20standard.png')"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2022 By simon yuan</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="I,LOVE,YOU" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
