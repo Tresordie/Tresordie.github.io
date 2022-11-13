@@ -6,7 +6,7 @@
   <link href="https://tresordie.github.io/atom.xml" rel="self"/>
   
   <link href="https://tresordie.github.io/"/>
-  <updated>2022-11-13T04:26:02.210Z</updated>
+  <updated>2022-11-13T16:54:19.151Z</updated>
   <id>https://tresordie.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Python基本语法</title>
+    <link href="https://tresordie.github.io/2022/11/12/[Python]python%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/"/>
+    <id>https://tresordie.github.io/2022/11/12/[Python]python%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/</id>
+    <published>2022-11-12T12:00:00.000Z</published>
+    <updated>2022-11-13T16:54:19.151Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="pythonpython基本语法">[Python]Python基本语法</h1><h2 id="数据类型">1. 数据类型</h2><blockquote><ol type="1"><li>数字 Number (python有复数类型：-6+4j)</li><li>字符串 String</li><li>列表 List</li><li>元组 Tuple</li><li>字典 Dictionary</li></ol></blockquote><h2 id="数字类型">2. 数字类型</h2><h3 id="类型">2.1 类型</h3><blockquote><p>int: 有符号整形</p><p>long: 长整型(可以代表八进制或十六进制)</p><p>float: 浮点数</p><p>complex: 复数</p></blockquote><h3 id="运算">2.2 运算</h3><blockquote><p>加 +</p><p>减 -</p><p>乘 *</p><p>除 /</p><p>整除 //</p><p>取模 %</p><p>乘方 **</p></blockquote><h2 id="字符串">3. 字符串</h2><h3 id="字符串内容选取">3.1 字符串内容选取</h3><ol type="1"><li>字符串的小标从 0 开始</li><li>对字符串选取[头下标：尾下标]，选取从头下标到尾下标的内容(不包含尾下标)</li><li>当下标为负数时，表示从后到前的顺序</li></ol><ul><li><p>a[1:] 表示从下标 1 到字符串最后</p></li><li><p>a[1:3] 表示从下标 1 到下标 3，但是不包含下标 3</p></li><li><p>a[:3] 表示从下标 0 开始到下标 3，但不包含下标 3</p></li><li><p>a[-1] 表示下标从后到前的第一个字符</p></li><li><p>a[1:-2] 表示从下标 1 到下标倒数第2个，但不包含倒数第2个</p></li></ul><h3 id="字符串接续">3.2 字符串接续</h3><ol type="1"><li>字符串乘法：相当于字符串复制多次</li><li>字符串加法：将相加的字符串接续起来</li></ol><h3 id="字符串替换">3.3 字符串替换</h3><h4 id="strip">3.3.1 strip()</h4><blockquote><ol type="1"><li>strip('a'): 移除字符串头尾指定的字符序列</li><li>strip(): 不指定字符即移除字符串头尾的空格</li><li>strip('ab'): 移除字符串头尾指定的字符ab, 不管顺序ab还是ba,移除头尾所有的a和b</li></ol></blockquote><h4 id="lstrip">3.3.2 lstrip()</h4><blockquote><ol type="1"><li>lstrip('a'): 移除字符串左边指定的字符序列</li><li>lstrip(): 不指定字符即移除字符串左边的空格</li><li>lstrip('ab'): 移除字符串左边指定的字符ab, 不管顺序ab还是ba,移除左边所有的a和b</li></ol></blockquote><h4 id="rstrip">3.3.3 rstrip()</h4><blockquote><ol type="1"><li>rstrip('a'): 移除字符串右边指定的字符序列</li><li>rstrip(): 不指定字符即移除字符串右边的空格</li><li>rstrip('ab'): 移除字符串右边指定的字符ab, 不管顺序ab还是ba,移除右边所有的a和b</li></ol></blockquote><h3 id="字符串的连接">3.4 字符串的连接</h3><h4 id="加法方式连接字符串">3.4.1 加法方式连接字符串</h4><blockquote><p>a = 's'</p><p>b = 'o'</p><p>c = a + b</p></blockquote><h4 id="join">3.4.2 join()</h4><blockquote><ol type="1"><li><p>join(): 将序列中的元素以指定的字符连接成一个新的字符串</p><p>str.join(sequence) --用字符串str将sequence中的各个元素连接起来</p></li></ol></blockquote><h3 id="字符查找-find">3.5 字符查找 find()</h3><blockquote><ol type="1"><li>str.find(str1, beg=0, end=len(string))<ul><li>从str中从index=0开始，到index=end结束，查找是否包含str1,并返回查找到的第一个str1的index</li><li>如果没有找到，则返回 -1</li></ul></li></ol></blockquote><h3 id="字符串比较">3.6 字符串比较</h3><blockquote><ol type="1"><li>比较符号： &gt;, ==, &lt;</li><li>逐个字符比较，返回 True/False</li></ol></blockquote><h3 id="字符串长度-len">3.7 字符串长度 len()</h3><blockquote><ol type="1"><li>len(str): 返回字符串长度</li></ol></blockquote><h3 id="字符大小写转换">3.8 字符大小写转换</h3><blockquote><ol type="1"><li>str.upper(): 将字符串全部转为大写</li><li>str.lower(): 将字符串全部转为小写</li><li>str.swapcase(): 将字符串大小写互换</li><li>str.capitalize(): 字符串首字母大写</li></ol></blockquote><h2 id="列表">4. 列表</h2><h3 id="列表的基本操作">4.1 列表的基本操作</h3><blockquote><ol type="1"><li>cmp(list1, list2): python2支持，python3开始去掉了此函数</li><li>len(list1): list的长度(元素个数)</li><li>max(list1)：list1中最大值元素</li><li>min(list1)：list1中最小值元素</li><li>list(tuple):将元组转换为列表，原来的元组不变，转换后结果返回的是列表</li></ol></blockquote><h3 id="列表常见方法">4.2 列表常见方法</h3><blockquote><ol type="1"><li>list.append(obj): 在列表末尾添加新的对象</li><li>list.count(obj): 统计某个元素在列表中出现的次数</li><li>list.extend(seq):在列表的末尾一次性追加另一个序列中的多个值(用新列表扩展原来的列表)</li><li>list.index(obj): 从列表中找出某个值第一个匹配项的索引位置</li><li>list.insert(index, obj): 将obj对象插入到列表的index位置</li><li>list.pop(obj=list[-1]):移除列表中的一个元素(默认是最后一个元素)，并且返回该元素的值</li><li>list.remove(obj): 移除列表中某个值的第一个匹配项</li><li>list.reverse(): 反向列表中元素</li><li>list.sort([func]): 对原列表进行排序<ul><li>sort()方法：list.sort(cmp = None, key = None, reverse = False)</li><li>cmp -- 可选参数, 如果指定了该参数会使用该参数的方法进行排序</li><li>key --参数key用来指定一个函数，此函数在每次元素比较时被调用，此函数代表排序的规则，也就是你按照什么规则对你的序列进行排序</li><li>key是指在每次排序前都需要按照指定的key操作一遍</li><li>reverse = False表示默认是升序排列；reverse = True表示降序排列</li></ul></li></ol></blockquote><h2 id="元组">5. 元组</h2><blockquote><ol type="1"><li>元组相当于只读列表，a=('abc', 'dc')</li><li>通过list(seq)可以将seq元组转换为列表</li></ol></blockquote><h2 id="字典">6. 字典</h2><h3 id="字典数据类型">6.1 字典数据类型</h3><blockquote><ol type="1"><li>字典数据类型就是键值对数据类型，数据的存取是通过key关键字来进行的</li><li>字典进行赋值操作后，后赋值的键值对会存在靠前的位置</li></ol></blockquote><h3 id="字典的内置函数">6.2 字典的内置函数</h3><blockquote><ol type="1"><li>len(dict1): 字典元素个数</li><li>str(dict1)：输出字典可打印的是字符串标识</li><li>type(dict1)：类型</li></ol></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">dict1 = &#123;<span class="string">&#x27;key1&#x27;</span>: <span class="string">&#x27;miss&#x27;</span>, <span class="string">&#x27;key2&#x27;</span>: <span class="string">&#x27;mr&#x27;</span>&#125;</span><br><span class="line">dict2 = &#123;<span class="string">&#x27;key3&#x27;</span>: <span class="string">&#x27;aiss&#x27;</span>, <span class="string">&#x27;key4&#x27;</span>: <span class="string">&#x27;smr&#x27;</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(dict1))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">str</span>(dict1))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(dict1))</span><br><span class="line"></span><br><span class="line">////////////////////////////////////////////</span><br><span class="line">Run &amp; Output:</span><br><span class="line">    <span class="number">2</span></span><br><span class="line">&#123;<span class="string">&#x27;key1&#x27;</span>: <span class="string">&#x27;miss&#x27;</span>, <span class="string">&#x27;key2&#x27;</span>: <span class="string">&#x27;mr&#x27;</span>&#125;</span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> &#x27;<span class="title">dict</span>&#x27;&gt;</span></span><br></pre></td></tr></table></figure><h3 id="字典的内置方法">6.3 字典的内置方法</h3><blockquote><ol type="1"><li><p>dict.clear(): 删除字典内所有元素</p></li><li><p>dict.copy():返回一个字典的浅复制；关于浅拷贝的含义，请参考以下链接</p><p>https://zhuanlan.zhihu.com/p/54011712</p></li><li><p>dict.fromkeys(seq[], value):以序列seq中的元素做字典的键，value为字典所有键对应的初始值</p></li><li><p>dict.get(key, default=None):返回指定键的值，如果值不在字典中，则返回default</p></li><li><p>dict.has_key(key): 如果键在字典中，则返回true,否则返回false</p></li><li><p>dict.items(): 以列表形式返回可遍历的(键，值)元组数组</p></li><li><p>dict.keys(): 以列表形式返回一个字典中所有的键</p></li><li><p>dict.setdefault(key, default=None):和get()类似，但如果键已经不存在于字典中，则将添加键并将值设为default</p></li><li><p>dict.update(dict2): 把dict2的键值对更新到字典中</p></li><li><p>dict.values(): 以列表形式返回字典中所有的值</p></li></ol></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;pythonpython基本语法&quot;&gt;[Python]Python基本语法&lt;/h1&gt;
+&lt;h2 id=&quot;数据类型&quot;&gt;1. 数据类型&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;数字 Number (python有复数类型：-6+4j</summary>
+      
+    
+    
+    
+    <category term="Programming Language" scheme="https://tresordie.github.io/categories/Programming-Language/"/>
+    
+    
+    <category term="Python" scheme="https://tresordie.github.io/tags/Python/"/>
+    
+  </entry>
   
   <entry>
     <title>PyQt5环境搭建(Win)</title>
@@ -537,34 +565,6 @@ PID(位置式)控制&lt;/h1&gt;
     
     
     <category term="PID" scheme="https://tresordie.github.io/tags/PID/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CLion搭建STM32开发环境</title>
-    <link href="https://tresordie.github.io/2022/03/14/[STM32]CLion%E6%90%AD%E5%BB%BASTM32%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/"/>
-    <id>https://tresordie.github.io/2022/03/14/[STM32]CLion%E6%90%AD%E5%BB%BASTM32%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</id>
-    <published>2022-03-14T14:00:00.000Z</published>
-    <updated>2022-09-01T12:14:35.804Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="clion-搭建-stm32-开发环境">CLion 搭建 STM32 开发环境</h1><h2 id="开发工具下载">1. 开发工具下载</h2><blockquote><ol type="1"><li><p>STM32CubeMx(ST 官网下载)</p></li><li><p>CLion 下载(Jetbrain 的官网去下载)</p></li><li><p>ARM-GCC 交叉编译工具链(windows 下 32bit, linux 下或者 MacOS 下有64bit)</p><p>https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads</p></li><li><p>minGW64</p><p>在 Windows 下提供类似于 linux 下 gcc的编译环境，主要包含了很多的库文件及一些常用工具(gcc, g++, objdump, make等等)</p></li></ol></blockquote><h2 id="clion-配置">2. CLion 配置</h2><h3 id="toolchains-配置">2.1 ToolChains 配置</h3><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/image-20220314210137261.png"alt="image-20220314210137261" /></p><h3 id="openocd-及-stm32cubemx-路径配置">2.2 openOCD 及 stm32CubeMX路径配置</h3><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/image-20220314210329777.png"alt="image-20220314210329777" /></p><h2 id="stm32cubemx-创建工程clion-导入后配置编译及下载工具">3.STM32CubeMX 创建工程，CLion 导入后配置编译及下载工具</h2><h3 id="stm32cubemx-创建工程后导入到-clion">3.1 STM32CubeMX创建工程后导入到 CLion</h3><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/image-20220314210556538.png"alt="image-20220314210556538" /></p><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/image-20220314210640443.png"alt="image-20220314210640443" /></p><h3 id="openocd-烧录的配置">3.2 openOCD 烧录的配置</h3><figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 选择对应调试器</span></span><br><span class="line"><span class="keyword">source</span> [find interface/cmsis-dap.cfg]</span><br><span class="line"><span class="comment"># 选择模式，这里的swd对应Cube MX设置”5线JTAG“ 对应野火调试器直接插指南者的”SWD“</span></span><br><span class="line">transport select swd</span><br><span class="line"><span class="comment"># 选择片上FLASH大小</span></span><br><span class="line"><span class="keyword">set</span> FLASH_SIZE <span class="number">0x80000</span></span><br><span class="line"><span class="comment"># 选择芯片</span></span><br><span class="line"><span class="keyword">source</span> [find target/stm32f1x.cfg]</span><br></pre></td></tr></table></figure>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;clion-搭建-stm32-开发环境&quot;&gt;CLion 搭建 STM32 开发环境&lt;/h1&gt;
-&lt;h2 id=&quot;开发工具下载&quot;&gt;1. 开发工具下载&lt;/h2&gt;
-&lt;blockquote&gt;
-&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;&lt;p&gt;STM32CubeMx(ST 官网</summary>
-      
-    
-    
-    
-    <category term="Tool" scheme="https://tresordie.github.io/categories/Tool/"/>
-    
-    
-    <category term="CLion" scheme="https://tresordie.github.io/tags/CLion/"/>
     
   </entry>
   
