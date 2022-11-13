@@ -6,7 +6,7 @@
   <link href="https://tresordie.github.io/atom.xml" rel="self"/>
   
   <link href="https://tresordie.github.io/"/>
-  <updated>2022-11-10T16:04:23.164Z</updated>
+  <updated>2022-11-13T04:26:02.210Z</updated>
   <id>https://tresordie.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PyQt5环境搭建(Win)</title>
+    <link href="https://tresordie.github.io/2022/11/12/[PyQt5]PyQt5%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA(Win)/"/>
+    <id>https://tresordie.github.io/2022/11/12/[PyQt5]PyQt5%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA(Win)/</id>
+    <published>2022-11-12T02:00:00.000Z</published>
+    <updated>2022-11-13T04:26:02.210Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="pyqtpyqt5环境搭建win">[PyQt]PyQt5环境搭建(Win)</h1><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/pyqt.png"alt="pyqt" /></p><h2 id="python3安装">1. Python3安装</h2><blockquote><ol type="1"><li>建议安装Python3.10之前的版本</li><li>安装Python3.7.10</li></ol></blockquote><h2 id="pyqt5安装">2. PyQt5安装</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install PyQt5</span><br></pre></td></tr></table></figure><h2 id="pyqt5-tool安装">3. PyQt5 tool安装</h2><blockquote><ol type="1"><li>安装PyQt5 tool</li><li>将PyQt5 tool安装路径加入到系统环境变量</li></ol></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install PyQt5-tools</span><br></pre></td></tr></table></figure><h2 id="安装python模块">4. 安装Python模块</h2><blockquote><ol type="1"><li><p>安装matplotlib</p><p>pip install matplotlib</p></li></ol></blockquote><h2 id="eric6安装">5. Eric6安装</h2><blockquote><ol type="1"><li><p>安装Qsci模块</p><p>pip install QScintilla</p></li><li><p>下载Eric6，进入到解压缩的文件夹，进行源码安装</p><p>python ./install.py</p></li><li><p>Eric6的汉化：</p><ul><li>下载汉化文件夹到i18n文件夹下</li><li>将install-i18n.py放到eric6的根目录下并运行</li></ul></li></ol></blockquote><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20221113114510566.png"alt="image-20221113114510566" /></p><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20221113114557009.png"alt="image-20221113114557009" /></p><h2 id="插件安装">6. 插件安装</h2><blockquote><ol type="1"><li><p>安装jedi插件(自动补齐)</p><p>pip install jedi</p></li><li><p>Eric6安装(手动安装)</p><ul><li>打开Eric6，菜单栏选择 extra -- 插件 -- 安装插件 --选择下载的jedi压缩文件进行安装</li></ul></li></ol></blockquote><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20221113115840766.png"alt="image-20221113115840766" /></p><h2 id="eric6配置">7. Eric6配置</h2><h3 id="编码utf-8">7.1 编码utf-8</h3><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20221113114816267.png"alt="image-20221113114816267" /></p><h3 id="配置qt及tool的路径">7.2 配置Qt及Tool的路径</h3><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20221113114922882.png"alt="image-20221113114922882" /></p><h3 id="配置api">7.3 配置API</h3><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20221113115255565.png"alt="image-20221113115255565" /></p><h3 id="auto-completion配置">7.4 Auto-Completion配置</h3><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20221113115445688.png"alt="image-20221113115445688" /></p><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20221113115926521.png"alt="image-20221113115926521" /></p><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20221113115951727.png"alt="image-20221113115951727" /></p><h3 id="设置工作区">7.5 设置工作区</h3><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20221113120035079.png"alt="image-20221113120035079" /></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;pyqtpyqt5环境搭建win&quot;&gt;[PyQt]PyQt5环境搭建(Win)&lt;/h1&gt;
+&lt;p&gt;&lt;img
+src=&quot;https://raw.githubusercontent.com/Tresordie/PicBed/master/pyqt.png&quot;
+alt=</summary>
+      
+    
+    
+    
+    <category term="Python" scheme="https://tresordie.github.io/categories/Python/"/>
+    
+    
+    <category term="PyQt" scheme="https://tresordie.github.io/tags/PyQt/"/>
+    
+  </entry>
   
   <entry>
     <title>Python列表</title>
@@ -538,33 +565,6 @@ PID(位置式)控制&lt;/h1&gt;
     
     
     <category term="CLion" scheme="https://tresordie.github.io/tags/CLion/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>uboot介绍</title>
-    <link href="https://tresordie.github.io/2022/03/07/[linux]uboot%E4%BB%8B%E7%BB%8D/"/>
-    <id>https://tresordie.github.io/2022/03/07/[linux]uboot%E4%BB%8B%E7%BB%8D/</id>
-    <published>2022-03-07T10:00:00.000Z</published>
-    <updated>2022-09-01T12:14:35.806Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="linuxuboot-介绍">[linux]uboot 介绍</h1><h2 id="了解-uboot">1. 了解 uboot</h2><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/Uboot.png"alt="Uboot" /></p><h2 id="uboot-阶段对-flash-的分区表">2. uboot 阶段对 Flash 的分区表</h2><blockquote><ol type="1"><li>分区如下图</li><li>uboot 的分区表需与 linux 内核中的分区表一致</li></ol></blockquote><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/image-20220307185222499.png"alt="image-20220307185222499" /></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;linuxuboot-介绍&quot;&gt;[linux]uboot 介绍&lt;/h1&gt;
-&lt;h2 id=&quot;了解-uboot&quot;&gt;1. 了解 uboot&lt;/h2&gt;
-&lt;p&gt;&lt;img
-src=&quot;https://raw.githubusercontent.com/Tresordie/P</summary>
-      
-    
-    
-    
-    <category term="linux" scheme="https://tresordie.github.io/categories/linux/"/>
-    
-    
-    <category term="uboot" scheme="https://tresordie.github.io/tags/uboot/"/>
     
   </entry>
   
