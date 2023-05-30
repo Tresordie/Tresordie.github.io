@@ -1,0 +1,285 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Pandas简介 | 时光渐渐逝去</title><meta name="keywords" content="Pandas"><meta name="author" content="simon yuan"><meta name="copyright" content="simon yuan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="[Python]Pandas简介 1. Pandas   Python的第三方库 用于数据分析   2. 环境搭建   解释器：python 编辑器：Jupyter notebook &#x2F; Jupyter lab &#x2F; VScode Pandas： pip install pandas   3. 读写excel 3.1 读取excel 123import pand">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pandas简介">
+<meta property="og:url" content="https://tresordie.github.io/2023/05/30/Pandas%E7%AE%80%E4%BB%8B/index.html">
+<meta property="og:site_name" content="时光渐渐逝去">
+<meta property="og:description" content="[Python]Pandas简介 1. Pandas   Python的第三方库 用于数据分析   2. 环境搭建   解释器：python 编辑器：Jupyter notebook &#x2F; Jupyter lab &#x2F; VScode Pandas： pip install pandas   3. 读写excel 3.1 读取excel 123import pand">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/Tresordie/PicBed/master/pandas.jpg">
+<meta property="article:published_time" content="2023-05-30T02:00:00.000Z">
+<meta property="article:modified_time" content="2023-05-30T06:45:13.626Z">
+<meta property="article:author" content="simon yuan">
+<meta property="article:tag" content="Pandas">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Tresordie/PicBed/master/pandas.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://tresordie.github.io/2023/05/30/Pandas%E7%AE%80%E4%BB%8B/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Pandas简介',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-05-30 14:45:13'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="时光渐渐逝去" type="application/atom+xml">
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/me.JPG" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">76</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">62</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://raw.githubusercontent.com/Tresordie/PicBed/master/pandas.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">时光渐渐逝去</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Pandas简介</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-05-30T02:00:00.000Z" title="发表于 2023-05-30 10:00:00">2023-05-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-05-30T06:45:13.626Z" title="更新于 2023-05-30 14:45:13">2023-05-30</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Python/">Python</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Pandas简介"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="pythonpandas简介">[Python]Pandas简介</h1>
+<h2 id="pandas">1. Pandas</h2>
+<blockquote>
+<ol type="1">
+<li>Python的第三方库</li>
+<li>用于数据分析</li>
+</ol>
+</blockquote>
+<h2 id="环境搭建">2. 环境搭建</h2>
+<blockquote>
+<ol type="1">
+<li><p>解释器：python</p></li>
+<li><p>编辑器：Jupyter notebook / Jupyter lab / VScode</p></li>
+<li><p>Pandas：</p>
+<p>pip install pandas</p></li>
+</ol>
+</blockquote>
+<h2 id="读写excel">3. 读写excel</h2>
+<h3 id="读取excel">3.1 读取excel</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df = pd.read_excel(<span class="string">&#x27;team.xlsx&#x27;</span>)   	<span class="comment">#读取excel文件到dataframe</span></span><br><span class="line">df								  	<span class="comment">#打印dataframe</span></span><br></pre></td></tr></table></figure>
+<p><img
+src="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20230530120846449.png"
+alt="image-20230530120846449" /></p>
+<h3 id="打印前20行">3.2 打印前20行</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_excel(<span class="string">&#x27;team.xlsx&#x27;</span>)   	<span class="comment">#读取excel文件到df</span></span><br><span class="line">df.head(<span class="number">20</span>)						  	<span class="comment">#打印前20行</span></span><br></pre></td></tr></table></figure>
+<h3 id="打印最后-xx-行默认5行">3.3 打印最后 xx 行(默认5行)</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_excel(<span class="string">&#x27;team.xlsx&#x27;</span>)   	<span class="comment">#读取excel文件到df</span></span><br><span class="line">df.tail()							<span class="comment">#打印倒数5行</span></span><br></pre></td></tr></table></figure>
+<h3 id="随机打印-xx-行默认5行">3.4 随机打印 xx 行(默认5行)</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_excel(<span class="string">&#x27;team.xlsx&#x27;</span>)   	<span class="comment">#读取excel文件到df</span></span><br><span class="line">df.sample(<span class="number">10</span>)         				<span class="comment">#random 10 rows	</span></span><br></pre></td></tr></table></figure>
+<h3 id="打印行列数">3.5 打印行列数</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_excel(<span class="string">&#x27;team.xlsx&#x27;</span>)   	<span class="comment">#读取excel文件到df</span></span><br><span class="line">df.shape  </span><br></pre></td></tr></table></figure>
+<h3 id="打印data-frame所有的数据类型索引情况行列数等信息">3.6 打印data
+frame所有的数据类型，索引情况，行列数等信息</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_excel(<span class="string">&#x27;team.xlsx&#x27;</span>)   	<span class="comment">#读取excel文件到df</span></span><br><span class="line">df.info()</span><br></pre></td></tr></table></figure>
+<p><img
+src="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20230530121620586.png"
+alt="image-20230530121620586" /></p>
+<h3 id="查看数值型列的汇总统计">3.7 查看数值型列的汇总统计</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_excel(<span class="string">&#x27;team.xlsx&#x27;</span>)   	<span class="comment">#读取excel文件到df</span></span><br><span class="line">df.describe()</span><br></pre></td></tr></table></figure>
+<p><img
+src="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20230530121800299.png"
+alt="image-20230530121800299" /></p>
+<h3 id="查看各字段类型">3.8 查看各字段类型</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_excel(<span class="string">&#x27;team.xlsx&#x27;</span>)   	<span class="comment">#读取excel文件到df</span></span><br><span class="line">df.dtypes</span><br></pre></td></tr></table></figure>
+<p><img
+src="C:\Users\simon\AppData\Roaming\Typora\typora-user-images\image-20230530121955029.png"
+alt="image-20230530121955029" /></p>
+<h3 id="查看数据列名">3.9 查看数据列名</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_excel(<span class="string">&#x27;team.xlsx&#x27;</span>)   	<span class="comment">#读取excel文件到df</span></span><br><span class="line">df.axes								<span class="comment">#行名</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_excel(<span class="string">&#x27;team.xlsx&#x27;</span>)   	<span class="comment">#读取excel文件到df</span></span><br><span class="line">df.columns							<span class="comment">#列名</span></span><br></pre></td></tr></table></figure>
+<h3 id="建立索引">3.10 建立索引</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_excel(<span class="string">&#x27;team.xlsx&#x27;</span>)</span><br><span class="line">df.set_index(<span class="string">&#x27;name&#x27;</span>, inplace=<span class="literal">True</span>)   <span class="comment"># inplace=True表示立即生效</span></span><br></pre></td></tr></table></figure>
+<p><img
+src="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20230530131723448.png"
+alt="image-20230530131723448" /></p>
+<h3 id="查看指定列">3.11 查看指定列</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_excel(<span class="string">&#x27;team.xlsx&#x27;</span>)</span><br><span class="line">df.set_index(<span class="string">&#x27;name&#x27;</span>, inplace=<span class="literal">True</span>)   	<span class="comment"># inplace=True表示立即生效</span></span><br><span class="line">df[<span class="string">&#x27;Q1&#x27;</span>]								<span class="comment"># 只看Q1列</span></span><br><span class="line">df[[<span class="string">&#x27;team&#x27;</span>, <span class="string">&#x27;Q2&#x27;</span>]]						<span class="comment"># 看 team 和 Q2两列</span></span><br></pre></td></tr></table></figure>
+<h3 id="选择多列">3.12 选择多列</h3>
+<blockquote>
+<ol type="1">
+<li>如果使用名称来选择多行的话，可以使用 df.loc[row, column]</li>
+<li>如果使用数字来选择多行的话，可以使用 df.iloc[row_num,
+column_num]</li>
+</ol>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_excel(<span class="string">&#x27;team.xlsx&#x27;</span>)</span><br><span class="line">df.set_index(<span class="string">&#x27;name&#x27;</span>, inplace=<span class="literal">True</span>)   	<span class="comment"># inplace=True表示立即生效</span></span><br><span class="line">df[[<span class="string">&#x27;team&#x27;</span>, <span class="string">&#x27;Q2&#x27;</span>]]						<span class="comment"># 看 team 和 Q2两列</span></span><br><span class="line">df.loc[:, [<span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;team&#x27;</span>]]				<span class="comment"># 看 team 和 Q2两列</span></span><br></pre></td></tr></table></figure>
+<h3 id="数据选择">3.13 数据选择</h3>
+<blockquote>
+<ol type="1">
+<li><p>选择列</p>
+<p>df['Q1'] 或 df.Q1</p></li>
+<li><p>选择行</p>
+<p>df[df.index == "Liver"]</p>
+<p>df[0:3] # 0到3行</p></li>
+<li><p>选择行和列</p>
+<p>df.iloc[0:10, 0:4] # 0到310行，0到4列</p>
+<p>df.loc['Ben', 'Q1':'Q4']</p>
+<p>df.loc['Ben'：'Alex', 'Q1':'Q4'] # 指定多行，多列</p></li>
+<li><p>条件选择</p>
+<p>df[df.Q1 &gt; 90] # Q1列中大于90的成员</p></li>
+</ol>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_excel(<span class="string">&#x27;team.xlsx&#x27;</span>)</span><br><span class="line">df.set_index(<span class="string">&#x27;name&#x27;</span>, inplace=<span class="literal">True</span>)</span><br><span class="line">df[df.Q1 &gt; <span class="number">90</span>]</span><br></pre></td></tr></table></figure>
+<h3 id="排序">3.14 排序</h3>
+<blockquote>
+<ol type="1">
+<li><p>指定列数据按照升序或者降序排列</p>
+<p>df.sort_values(by='Q1') # Q1列按照数据升序排列</p>
+<p>df.sort_values(by='Q1', ascending=False) # Q1列按照数据降序排列</p>
+<p>df.sort_values(['team', 'Q1'], ascending=[True, False]) #
+team升序，Q1降序</p></li>
+</ol>
+</blockquote>
+<h3 id="分组聚合">3.15 分组聚合</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_excel(<span class="string">&#x27;team.xlsx&#x27;</span>)</span><br><span class="line">df.set_index(<span class="string">&#x27;name&#x27;</span>, inplace=<span class="literal">True</span>)</span><br><span class="line">df.groupby(<span class="string">&#x27;team&#x27;</span>).<span class="built_in">sum</span>()							<span class="comment"># team分组，然后组内求和</span></span><br><span class="line">df.groupby(<span class="string">&#x27;team&#x27;</span>).mean()</span><br><span class="line"></span><br><span class="line">df.groupby(<span class="string">&#x27;team&#x27;</span>).agg(&#123;<span class="string">&#x27;Q1&#x27;</span>:<span class="built_in">sum</span>, <span class="string">&#x27;Q2&#x27;</span>: <span class="string">&#x27;count&#x27;</span>, <span class="string">&#x27;Q3&#x27;</span>: <span class="string">&#x27;mean&#x27;</span>, <span class="string">&#x27;Q4&#x27;</span>: <span class="string">&#x27;max&#x27;</span>&#125;)			<span class="comment"># 不同列，不同的计算方法</span></span><br></pre></td></tr></table></figure>
+<p><img
+src="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20230530143145034.png"
+alt="image-20230530143145034" /></p>
+<h3 id="数据转换">3.16 数据转换</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_excel(<span class="string">&#x27;team.xlsx&#x27;</span>)</span><br><span class="line">df.set_index(<span class="string">&#x27;name&#x27;</span>, inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># df.groupby(&#x27;team&#x27;).agg(&#123;&#x27;Q1&#x27;:sum, &#x27;Q2&#x27;: &#x27;count&#x27;, &#x27;Q3&#x27;: &#x27;mean&#x27;, &#x27;Q4&#x27;: &#x27;max&#x27;&#125;)			# 不同列，不同的计算方法</span></span><br><span class="line">df.groupby(<span class="string">&#x27;team&#x27;</span>).agg(&#123;<span class="string">&#x27;Q1&#x27;</span>:<span class="built_in">sum</span>, <span class="string">&#x27;Q2&#x27;</span>: <span class="string">&#x27;count&#x27;</span>, <span class="string">&#x27;Q3&#x27;</span>: <span class="string">&#x27;mean&#x27;</span>, <span class="string">&#x27;Q4&#x27;</span>: <span class="string">&#x27;max&#x27;</span>&#125;).T			<span class="comment"># T 意思为对矩阵进行转置</span></span><br></pre></td></tr></table></figure>
+<p><img
+src="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20230530143223579.png"
+alt="image-20230530143223579" /></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_excel(<span class="string">&#x27;team.xlsx&#x27;</span>)</span><br><span class="line">df.set_index(<span class="string">&#x27;name&#x27;</span>, inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">df.groupby(<span class="string">&#x27;team&#x27;</span>).<span class="built_in">sum</span>().stack()</span><br></pre></td></tr></table></figure>
+<p><img
+src="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20230530143332100.png"
+alt="image-20230530143332100" /></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_excel(<span class="string">&#x27;team.xlsx&#x27;</span>)</span><br><span class="line">df.set_index(<span class="string">&#x27;name&#x27;</span>, inplace=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">df.groupby(<span class="string">&#x27;team&#x27;</span>).<span class="built_in">sum</span>().unstack()</span><br></pre></td></tr></table></figure>
+<p><img
+src="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20230530143411021.png"
+alt="image-20230530143411021" /></p>
+<h3 id="统计分析">3.17 统计分析</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_excel(<span class="string">&#x27;team.xlsx&#x27;</span>)</span><br><span class="line">df.set_index(<span class="string">&#x27;name&#x27;</span>, inplace=<span class="literal">True</span>)</span><br><span class="line"><span class="comment"># df.mean()					# 所有行的平均值</span></span><br><span class="line"><span class="comment"># df.mean(1)				# 所有列的平均值</span></span><br><span class="line"><span class="comment"># df.corr()					# 列与列之间的相关关系</span></span><br><span class="line"><span class="comment"># df.count()				# 每一列的非空值的个数</span></span><br><span class="line"><span class="comment"># df.max()					# 每一列的最大值</span></span><br><span class="line"><span class="comment"># df.min()					# 每一列的最小值</span></span><br><span class="line"><span class="comment"># df.median()				# 每一列的中位数</span></span><br><span class="line"><span class="comment"># df.std()					# 每一列的标准差</span></span><br><span class="line"><span class="comment"># df.var()					# 方差</span></span><br><span class="line">df.mode()					<span class="comment"># 众数</span></span><br></pre></td></tr></table></figure>
+<h3 id="绘图">3.18 绘图</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_excel(<span class="string">&#x27;team.xlsx&#x27;</span>)</span><br><span class="line">df.set_index(<span class="string">&#x27;name&#x27;</span>, inplace=<span class="literal">True</span>)</span><br><span class="line">df.Q1.plot()</span><br><span class="line"><span class="comment"># df.loc[&#x27;Ben&#x27;, &#x27;Q1&#x27;:&#x27;Q4&#x27;].plot()				# 变化图</span></span><br><span class="line"><span class="comment"># df.loc[&#x27;Ben&#x27;, &#x27;Q1&#x27;:&#x27;Q4&#x27;].plot.bar()			# 纵向柱状图</span></span><br><span class="line"><span class="comment"># df.loc[&#x27;Ben&#x27;, &#x27;Q1&#x27;:&#x27;Q4&#x27;].plot.barh()			# 横向柱状图</span></span><br><span class="line"><span class="comment"># df.groupby(&#x27;team&#x27;).sum().T.plot()				# 转置折线图</span></span><br><span class="line"><span class="comment"># df.groupby(&#x27;team&#x27;).sum().plot()				# 折线图</span></span><br><span class="line"><span class="comment"># df.groupby(&#x27;team&#x27;).count().Q1.plot.pie()		# 饼图</span></span><br></pre></td></tr></table></figure>
+<p><img
+src="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20230530144110880.png"
+alt="image-20230530144110880" /></p>
+<p><img
+src="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20230530144051464.png"
+alt="image-20230530144051464" /></p>
+<p><img
+src="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20230530144224563.png"
+alt="image-20230530144224563" /></p>
+<p><img
+src="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20230530144438367.png"
+alt="image-20230530144438367" /></p>
+<p><img
+src="https://raw.githubusercontent.com/Tresordie/PicBed/master/image-20230530144504476.png"
+alt="image-20230530144504476" /></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">simon yuan</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://tresordie.github.io/2023/05/30/Pandas%E7%AE%80%E4%BB%8B/">https://tresordie.github.io/2023/05/30/Pandas%E7%AE%80%E4%BB%8B/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://tresordie.github.io" target="_blank">时光渐渐逝去</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Pandas/">Pandas</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/11/12/%5BPython%5Dpython%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/"><img class="next-cover" src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/0f6019e15f1d8ae07e7e8ea16d242676.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Python基本语法</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/me.JPG" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">simon yuan</div><div class="author-info__description">记录分享学习、生活的地方</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">文章</div><div class="length-num">76</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">标签</div><div class="length-num">62</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://gitee.com/simonyuan2019"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://gitee.com/simonyuan2019" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:Tresordie@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">IoT物联网/嵌入式学习探讨</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#pythonpandas%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">[Python]Pandas简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#pandas"><span class="toc-number">1.1.</span> <span class="toc-text">1. Pandas</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-number">1.2.</span> <span class="toc-text">2. 环境搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BB%E5%86%99excel"><span class="toc-number">1.3.</span> <span class="toc-text">3. 读写excel</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96excel"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 读取excel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E5%8D%B0%E5%89%8D20%E8%A1%8C"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 打印前20行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E5%8D%B0%E6%9C%80%E5%90%8E-xx-%E8%A1%8C%E9%BB%98%E8%AE%A45%E8%A1%8C"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.3 打印最后 xx 行(默认5行)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9A%8F%E6%9C%BA%E6%89%93%E5%8D%B0-xx-%E8%A1%8C%E9%BB%98%E8%AE%A45%E8%A1%8C"><span class="toc-number">1.3.4.</span> <span class="toc-text">3.4 随机打印 xx 行(默认5行)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E5%8D%B0%E8%A1%8C%E5%88%97%E6%95%B0"><span class="toc-number">1.3.5.</span> <span class="toc-text">3.5 打印行列数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E5%8D%B0data-frame%E6%89%80%E6%9C%89%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%B4%A2%E5%BC%95%E6%83%85%E5%86%B5%E8%A1%8C%E5%88%97%E6%95%B0%E7%AD%89%E4%BF%A1%E6%81%AF"><span class="toc-number">1.3.6.</span> <span class="toc-text">3.6 打印data
+frame所有的数据类型，索引情况，行列数等信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%95%B0%E5%80%BC%E5%9E%8B%E5%88%97%E7%9A%84%E6%B1%87%E6%80%BB%E7%BB%9F%E8%AE%A1"><span class="toc-number">1.3.7.</span> <span class="toc-text">3.7 查看数值型列的汇总统计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%90%84%E5%AD%97%E6%AE%B5%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.3.8.</span> <span class="toc-text">3.8 查看各字段类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%88%97%E5%90%8D"><span class="toc-number">1.3.9.</span> <span class="toc-text">3.9 查看数据列名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E7%B4%A2%E5%BC%95"><span class="toc-number">1.3.10.</span> <span class="toc-text">3.10 建立索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%8C%87%E5%AE%9A%E5%88%97"><span class="toc-number">1.3.11.</span> <span class="toc-text">3.11 查看指定列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E5%A4%9A%E5%88%97"><span class="toc-number">1.3.12.</span> <span class="toc-text">3.12 选择多列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%80%89%E6%8B%A9"><span class="toc-number">1.3.13.</span> <span class="toc-text">3.13 数据选择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%92%E5%BA%8F"><span class="toc-number">1.3.14.</span> <span class="toc-text">3.14 排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%BB%84%E8%81%9A%E5%90%88"><span class="toc-number">1.3.15.</span> <span class="toc-text">3.15 分组聚合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.3.16.</span> <span class="toc-text">3.16 数据转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90"><span class="toc-number">1.3.17.</span> <span class="toc-text">3.17 统计分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%98%E5%9B%BE"><span class="toc-number">1.3.18.</span> <span class="toc-text">3.18 绘图</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/05/30/Pandas%E7%AE%80%E4%BB%8B/" title="Pandas简介"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/pandas.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Pandas简介"/></a><div class="content"><a class="title" href="/2023/05/30/Pandas%E7%AE%80%E4%BB%8B/" title="Pandas简介">Pandas简介</a><time datetime="2023-05-30T02:00:00.000Z" title="发表于 2023-05-30 10:00:00">2023-05-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/12/%5BPython%5Dpython%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/" title="Python基本语法"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/0f6019e15f1d8ae07e7e8ea16d242676.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python基本语法"/></a><div class="content"><a class="title" href="/2022/11/12/%5BPython%5Dpython%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/" title="Python基本语法">Python基本语法</a><time datetime="2022-11-12T12:00:00.000Z" title="发表于 2022-11-12 20:00:00">2022-11-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/12/%5BPyQt5%5DPyQt5%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA(Win)/" title="PyQt5环境搭建(Win)"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/pyqt.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PyQt5环境搭建(Win)"/></a><div class="content"><a class="title" href="/2022/11/12/%5BPyQt5%5DPyQt5%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA(Win)/" title="PyQt5环境搭建(Win)">PyQt5环境搭建(Win)</a><time datetime="2022-11-12T02:00:00.000Z" title="发表于 2022-11-12 10:00:00">2022-11-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/11/%5BPython%5D%E5%88%97%E8%A1%A8/" title="Python列表"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/img/0f6019e15f1d8ae07e7e8ea16d242676.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python列表"/></a><div class="content"><a class="title" href="/2022/08/11/%5BPython%5D%E5%88%97%E8%A1%A8/" title="Python列表">Python列表</a><time datetime="2022-08-11T12:00:00.000Z" title="发表于 2022-08-11 20:00:00">2022-08-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/03/%5BGPS%5DGPS%E7%AE%80%E4%BB%8B/" title="GPS Basic"><img src="https://raw.githubusercontent.com/Tresordie/PicBed/master/GPS.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GPS Basic"/></a><div class="content"><a class="title" href="/2022/08/03/%5BGPS%5DGPS%E7%AE%80%E4%BB%8B/" title="GPS Basic">GPS Basic</a><time datetime="2022-08-03T02:00:00.000Z" title="发表于 2022-08-03 10:00:00">2022-08-03</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://raw.githubusercontent.com/Tresordie/PicBed/master/pandas.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2023 By simon yuan</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><div class="js-pjax"></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/fireworks.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="I,LOVE,YOU" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
