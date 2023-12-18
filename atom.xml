@@ -6,7 +6,7 @@
   <link href="https://tresordie.github.io/atom.xml" rel="self"/>
   
   <link href="https://tresordie.github.io/"/>
-  <updated>2023-12-16T14:45:29.223Z</updated>
+  <updated>2023-12-18T07:35:54.320Z</updated>
   <id>https://tresordie.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Filco键盘蓝牙配对方式</title>
+    <link href="https://tresordie.github.io/2023/12/17/Filco%E9%94%AE%E7%9B%98%E8%93%9D%E7%89%99%E9%85%8D%E5%AF%B9%E6%96%B9%E5%BC%8F/"/>
+    <id>https://tresordie.github.io/2023/12/17/Filco%E9%94%AE%E7%9B%98%E8%93%9D%E7%89%99%E9%85%8D%E5%AF%B9%E6%96%B9%E5%BC%8F/</id>
+    <published>2023-12-17T02:00:00.000Z</published>
+    <updated>2023-12-18T07:35:54.320Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="filco键盘蓝牙配对方式">Filco键盘蓝牙配对方式</h1><ul><li>1.长按清楚键</li><li>2.Ctrl + Alt + Fn 同时按，此时蓝灯和红灯常亮</li><li>3.按1~4选择一个蓝牙通道进行第一个蓝牙配对</li><li>4.和第一台设备进行蓝牙配对</li><li>5.Ctrl + Alt + Fn 同时按，此时蓝灯和红灯常亮</li><li>6.按1~4选择一个蓝牙通道进行第二个蓝牙配对</li><li>7.Ctrl + Alt + Fn 同时按，此时蓝灯和红灯常亮</li><li>8.按1~4选择一个蓝牙通道进行第三个蓝牙配对</li></ul>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;filco键盘蓝牙配对方式&quot;&gt;Filco键盘蓝牙配对方式&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;1.长按清楚键&lt;/li&gt;
+&lt;li&gt;2.Ctrl + Alt + Fn 同时按，此时蓝灯和红灯常亮&lt;/li&gt;
+&lt;li&gt;3.按1~4选择一个蓝牙通道进行第一个蓝牙配对&lt;/li</summary>
+      
+    
+    
+    
+    <category term="蓝牙键盘" scheme="https://tresordie.github.io/categories/%E8%93%9D%E7%89%99%E9%94%AE%E7%9B%98/"/>
+    
+    
+    <category term="Filco" scheme="https://tresordie.github.io/tags/Filco/"/>
+    
+  </entry>
   
   <entry>
     <title>vmware虚拟机与windows之间无法复制粘贴</title>
@@ -539,35 +567,6 @@ alt=&quot;SDIO&quot;</summary>
     
     
     <category term="sdio" scheme="https://tresordie.github.io/tags/sdio/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>文件系统存在的意义</title>
-    <link href="https://tresordie.github.io/2022/03/22/[fs]%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%AD%98%E5%9C%A8%E7%9A%84%E6%84%8F%E4%B9%89/"/>
-    <id>https://tresordie.github.io/2022/03/22/[fs]%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%AD%98%E5%9C%A8%E7%9A%84%E6%84%8F%E4%B9%89/</id>
-    <published>2022-03-22T11:00:00.000Z</published>
-    <updated>2022-09-01T12:14:35.806Z</updated>
-    
-    <content type="html"><![CDATA[<p>##[FS]文件系统存在的意义</p><h2 id="为什么需要文件系统">1. 为什么需要文件系统</h2><h3 id="没有文件系统时">1.1 没有文件系统时</h3><blockquote><ol type="1"><li>没有文件系统时，如何在存储介质上读写数据？<ul><li>单字节读写</li><li>页面读写</li><li>扇区读写</li></ul></li><li><font color='brown'>没有文件系统时，之前存储在存储介质中的大量数据，需要读出来，怎么知道之前存在哪个具体的字节地址，页面地址或者扇区地址；现在该从哪里读出来</font></li></ol></blockquote><h3 id="有文件系统时">1.2 有文件系统时</h3><blockquote><ol type="1"><li>使用文件系统时，数据都以文件的形式存储</li><li>写入新文件时，先在目录中创建一个文件索引，它指示了文件存放的物理地址，再把数据存储到该地址中</li><li>读取数据时，可以从目录中找到该文件的索引，进而在相应的地址中读取出数据</li><li>文件系统是为了存储和管理数据，而在存储介质建立的一种组织结构，这些结构包括操作系统引导区、目录和文件；</li><li>在使用文件系统前，要先对存储介质进行格式化。格式化先擦除原来内容，在存储介质上新建一个文件分配表和目录。这样文件系统就可以记录数据存放的物理地址，剩余空间等</li></ol></blockquote><h2 id="文件系统">2. 文件系统</h2><h3 id="嵌入式文件系统">2.1 嵌入式文件系统</h3><blockquote><ol type="1"><li>FATFS</li><li>znFAT</li><li>Little FS</li></ol></blockquote><h3 id="pc-文件系统">2.2 PC 文件系统</h3><blockquote><ol type="1"><li>FAT32</li><li>NTFS</li><li>exFAT</li><li>ext4</li></ol></blockquote><h2 id="file-system-中需要考虑的问题">3. File System中需要考虑的问题</h2><blockquote><p><font color='red'>1. 读取文件时，如何快速定位文件位置并完整读取出来</font></p><p><font color='red'>2. 存储文件时，存储到哪个位置才能充分利用空间</font></p><p><font color='red'>3.  文件删除时，如何对空间进行管理</font></p></blockquote>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;##[FS]文件系统存在的意义&lt;/p&gt;
-&lt;h2 id=&quot;为什么需要文件系统&quot;&gt;1. 为什么需要文件系统&lt;/h2&gt;
-&lt;h3 id=&quot;没有文件系统时&quot;&gt;1.1 没有文件系统时&lt;/h3&gt;
-&lt;blockquote&gt;
-&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;没有文件系统时，如何</summary>
-      
-    
-    
-    
-    <category term="协议" scheme="https://tresordie.github.io/categories/%E5%8D%8F%E8%AE%AE/"/>
-    
-    
-    <category term="file system" scheme="https://tresordie.github.io/tags/file-system/"/>
     
   </entry>
   
