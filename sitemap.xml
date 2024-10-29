@@ -2,6 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://tresordie.github.io/2024/10/29/[matplotlib%E5%AE%9E%E8%B7%B5]matplotlib%E7%BB%9F%E8%AE%A1%E5%87%BD%E6%95%B0%E7%BB%98%E5%88%B6%E7%AE%80%E5%8D%95%E5%9B%BE%E5%BD%A2/</loc>
+    
+    <lastmod>2024-10-29</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://tresordie.github.io/2024/10/27/[matplotlib%E5%AE%9E%E8%B7%B5]matplotlib%E7%BB%98%E5%88%B6%E5%9B%BE%E8%A1%A8%E5%85%83%E7%B4%A0/</loc>
+    
+    <lastmod>2024-10-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://tresordie.github.io/2023/12/18/%E9%BD%90%E7%BA%B3%E4%BA%8C%E6%9E%81%E7%AE%A1/</loc>
     
     <lastmod>2023-12-18</lastmod>
@@ -542,7 +560,7 @@
   </url>
   
   <url>
-    <loc>https://tresordie.github.io/2021/12/20/[Bootloader]STM32%20bootloader/</loc>
+    <loc>https://tresordie.github.io/2022/05/22/[Audio]wav%E9%9F%B3%E9%A2%91%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/</loc>
     
     <lastmod>2022-09-01</lastmod>
     
@@ -551,7 +569,7 @@
   </url>
   
   <url>
-    <loc>https://tresordie.github.io/2022/05/22/[Audio]wav%E9%9F%B3%E9%A2%91%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/</loc>
+    <loc>https://tresordie.github.io/2021/12/20/[Bootloader]STM32%20bootloader/</loc>
     
     <lastmod>2022-09-01</lastmod>
     
@@ -641,7 +659,7 @@
   </url>
   
   <url>
-    <loc>https://tresordie.github.io/2021/12/06/3.FreeRTOSConfig%E9%85%8D%E7%BD%AE/</loc>
+    <loc>https://tresordie.github.io/2021/12/06/4.FreeRTOS%E7%9A%84%E7%A7%BB%E6%A4%8D/</loc>
     
     <lastmod>2022-09-01</lastmod>
     
@@ -650,7 +668,7 @@
   </url>
   
   <url>
-    <loc>https://tresordie.github.io/2021/12/06/4.FreeRTOS%E7%9A%84%E7%A7%BB%E6%A4%8D/</loc>
+    <loc>https://tresordie.github.io/2021/12/06/3.FreeRTOSConfig%E9%85%8D%E7%BD%AE/</loc>
     
     <lastmod>2022-09-01</lastmod>
     
@@ -922,14 +940,14 @@
   </url>
   
   <url>
-    <loc>https://tresordie.github.io/tags/FreeRTOS%E9%85%8D%E7%BD%AE/</loc>
+    <loc>https://tresordie.github.io/tags/FreeRTOS%E7%A7%BB%E6%A4%8D/</loc>
     <lastmod>2024-10-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://tresordie.github.io/tags/FreeRTOS%E7%A7%BB%E6%A4%8D/</loc>
+    <loc>https://tresordie.github.io/tags/FreeRTOS%E9%85%8D%E7%BD%AE/</loc>
     <lastmod>2024-10-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1020,14 +1038,14 @@
   </url>
   
   <url>
-    <loc>https://tresordie.github.io/tags/bootloader/</loc>
+    <loc>https://tresordie.github.io/tags/wav/</loc>
     <lastmod>2024-10-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://tresordie.github.io/tags/wav/</loc>
+    <loc>https://tresordie.github.io/tags/bootloader/</loc>
     <lastmod>2024-10-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1153,14 +1171,14 @@
   </url>
   
   <url>
-    <loc>https://tresordie.github.io/tags/Source-Insight/</loc>
+    <loc>https://tresordie.github.io/tags/VSCode/</loc>
     <lastmod>2024-10-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://tresordie.github.io/tags/VSCode/</loc>
+    <loc>https://tresordie.github.io/tags/Source-Insight/</loc>
     <lastmod>2024-10-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1189,6 +1207,20 @@
   
   <url>
     <loc>https://tresordie.github.io/tags/macOS%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</loc>
+    <lastmod>2024-10-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://tresordie.github.io/tags/software/</loc>
+    <lastmod>2024-10-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://tresordie.github.io/tags/software-python/</loc>
     <lastmod>2024-10-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1330,14 +1362,14 @@
   </url>
   
   <url>
-    <loc>https://tresordie.github.io/categories/STM32/</loc>
+    <loc>https://tresordie.github.io/categories/Audio/</loc>
     <lastmod>2024-10-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://tresordie.github.io/categories/Audio/</loc>
+    <loc>https://tresordie.github.io/categories/STM32/</loc>
     <lastmod>2024-10-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
