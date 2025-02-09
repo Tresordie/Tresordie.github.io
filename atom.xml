@@ -6,7 +6,7 @@
   <link href="https://tresordie.github.io/atom.xml" rel="self"/>
   
   <link href="https://tresordie.github.io/"/>
-  <updated>2024-12-17T04:01:16.131Z</updated>
+  <updated>2025-02-09T04:22:54.984Z</updated>
   <id>https://tresordie.github.io/</id>
   
   <author>
@@ -17,13 +17,42 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>PCB Layout DRC及规则</title>
+    <link href="https://tresordie.github.io/2025/01/29/[PCB%20Layout]DRC%E5%8F%8A%E8%A7%84%E5%88%99/"/>
+    <id>https://tresordie.github.io/2025/01/29/[PCB%20Layout]DRC%E5%8F%8A%E8%A7%84%E5%88%99/</id>
+    <published>2025-01-29T02:00:00.000Z</published>
+    <updated>2025-02-09T04:22:54.984Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="pcb-layoutdrc及规则">[PCB Layout]DRC及规则</h2><h3 id="drc检查项设置">1. DRC检查项设置</h3><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/pcb_layout_drc1.png"alt="pcb_layout_drc1" /></p><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/pcb_layout_drc2.png"alt="pcb_layout_drc2" /></p><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/pcb_layout_drc3.png"alt="pcb_layout_drc3" /></p><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/pcb_layout_drc4.png"alt="pcb_layout_drc4" /></p><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/pcb_layout_drc5.png"alt="pcb_layout_drc5" /></p><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/pcb_layout_drc6.png"alt="pcb_layout_drc6" /></p><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/pcb_layout_drc7.png"alt="pcb_layout_drc7" /></p><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/pcb_layout_drc8.png"alt="pcb_layout_drc8" /></p><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/pcb_layout_drc9.png"alt="pcb_layout_drc9" /></p><h3 id="design-rule设置">2. Design Rule设置</h3><p><ahref="https://blog.csdn.net/hanhui22/article/details/122661340">嘉立创PCB工艺参数</a></p><h4 id="过孔">2.1 过孔</h4><blockquote><ol type="1"><li>双面板：内径 &gt;= 0.3mm, 外径 &gt;= 0.5mm</li><li>多层板：内径 &gt;= 0.2mm, 外径 &gt;= 0.4mm</li></ol></blockquote><h4 id="线宽">2.2 线宽</h4><blockquote><ol type="1"><li>双面板：d &gt;= 5mil</li><li>多层板：d &gt;= 3.5mil</li></ol></blockquote><h4 id="导线之间的间距4mil-d-10mil">2.3 导线之间的间距(4mil &lt;= d&lt;= 10mil)</h4><blockquote><ol type="1"><li>双面板：d &gt;= 5mil (建议设置为最小 6mil)</li><li>多层板：d &gt;= 3.5mil</li></ol></blockquote><h4 id="过孔与走线之间的间距">2.4 过孔与走线之间的间距</h4><blockquote><p>d &gt;= 6mil</p></blockquote><h4 id="焊盘边缘与走线之间的间距">2.5 焊盘边缘与走线之间的间距</h4><blockquote><p>d &gt;= 6mil</p></blockquote><h4 id="字符大小">2.6 字符大小</h4><blockquote><ol type="1"><li>最小字符宽度：w &gt;= 6mil</li><li>最小字符高度：h &gt;= 40mil</li></ol></blockquote><h4 id="最小工艺边">2.7 最小工艺边</h4><blockquote><ol type="1"><li>最小工艺边 &gt;= 3mm</li></ol></blockquote><h4 id="半孔工艺">2.8 半孔工艺</h4><blockquote><ol type="1"><li>最小孔径 &gt;= 0.6mm</li></ol></blockquote><h4 id="走线和焊盘与板边距离">2.9 走线和焊盘与板边距离</h4><blockquote><ol type="1"><li>单片出货：&gt;= 0.3mm</li><li>拼版出货：&gt;= 0.4mm (考虑拼版 v-cut)</li></ol></blockquote><h4 id="阻焊层开窗">2.10 阻焊层开窗</h4><blockquote><ol type="1"><li>绿油桥 &gt;= 0.05mm</li></ol></blockquote><h4 id="铜厚">2.11 铜厚</h4><blockquote><ol type="1"><li>成品外层铜厚：1oz = 0.035mm</li><li>成品内层铜厚：0.5oz = 0.017mm</li></ol></blockquote>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;pcb-layoutdrc及规则&quot;&gt;[PCB Layout]DRC及规则&lt;/h2&gt;
+&lt;h3 id=&quot;drc检查项设置&quot;&gt;1. DRC检查项设置&lt;/h3&gt;
+&lt;p&gt;&lt;img
+src=&quot;https://raw.githubusercontent.com/Treso</summary>
+      
+    
+    
+    
+    <category term="PCB Layout" scheme="https://tresordie.github.io/categories/PCB-Layout/"/>
+    
+    
+    <category term="PCB Layout" scheme="https://tresordie.github.io/tags/PCB-Layout/"/>
+    
+    <category term="Altium Designer" scheme="https://tresordie.github.io/tags/Altium-Designer/"/>
+    
+  </entry>
+  
+  <entry>
     <title>通信建立及保持时间</title>
     <link href="https://tresordie.github.io/2024/12/17/%E9%80%9A%E4%BF%A1%E5%BB%BA%E7%AB%8B%E5%8F%8A%E4%BF%9D%E6%8C%81%E6%97%B6%E9%97%B4/"/>
     <id>https://tresordie.github.io/2024/12/17/%E9%80%9A%E4%BF%A1%E5%BB%BA%E7%AB%8B%E5%8F%8A%E4%BF%9D%E6%8C%81%E6%97%B6%E9%97%B4/</id>
     <published>2024-12-16T16:00:00.000Z</published>
-    <updated>2024-12-17T04:01:16.131Z</updated>
+    <updated>2025-02-09T11:05:50.987Z</updated>
     
-    <content type="html"><![CDATA[<p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/202412171158860.png"alt="v-set-hold-time.png" /><br /># 建立时间（Setup Time)</p><p>建立时间是指<strong>数据信号必须在时钟信号上升沿或下降沿到来之前保持稳定的最小时间</strong>。<br />-换句话说，输入数据在时钟触发沿到来之前的这段时间内，不能发生任何变化，否则可能导致触发器无法正确采样数据。<br />- 建立时间主要取决于触发器内部电路的传播延迟和稳定所需的时间。<br /><strong>例如：</strong>如果一个触发器的建立时间是2ns，那么输入数据必须至少在时钟边沿前的2ns内保持稳定，才能被正确采样。</p><h1 id="保持时间hold-time">保持时间（Hold Time)</h1><p>保持时间是指<strong>数据信号在时钟信号上升沿或下降沿到来之后仍需保持稳定的最小时间</strong>。<br />-换句话说，输入数据在时钟触发沿之后的这段时间内，不能立即发生变化，否则可能导致触发器采样错误。<br />- 保持时间与触发器内部电路的反馈延迟相关。<br /><strong>例如：</strong><br />如果一个触发器的保持时间是1ns，那么输入数据在时钟边沿之后至少要保持1ns不变</p><h1 id="建立时间和保持时间的作用">建立时间和保持时间的作用</h1><p>这两个参数保证了触发器能够正确采样数据，防止因时序问题导致的不稳定或错误。它们是设计数字电路时序约束的关键因素：<br />1.<strong>建立时间确保输入信号在触发器采样之前稳定下来</strong>，避免采样到错误的瞬态信号。<br />2.<strong>保持时间确保触发器在完成采样后有足够的时间锁存数据</strong>。</p><h1 id="总结对比">总结对比</h1><table><colgroup><col style="width: 15%" /><col style="width: 58%" /><col style="width: 25%" /></colgroup><thead><tr><th>参数</th><th>定义</th><th>时间范围</th></tr></thead><tbody><tr><td>建立时间</td><td>数据在时钟沿到来前需要稳定的最短时间。</td><td>时钟沿之前的时间</td></tr><tr><td>保持时间</td><td>数据在时钟沿到来后需要保持稳定的最短时间。</td><td>时钟沿之后的时间</td></tr></tbody></table>]]></content>
+    <content type="html"><![CDATA[<p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/202412171158860.png"alt="v-set-hold-time.png" /><br /># 建立时间（Setup Time)</p><p>建立时间是指<strong>数据信号必须在时钟信号上升沿或下降沿到来之前保持稳定的最小时间</strong>。<br />-换句话说，输入数据在时钟触发沿到来之前的这段时间内，不能发生任何变化，否则可能导致触发器无法正确采样数据。<br />- 建立时间主要取决于触发器内部电路的传播延迟和稳定所需的时间。<br /><strong>例如：</strong>如果一个触发器的建立时间是2ns，那么输入数据必须至少在时钟边沿前的2ns内保持稳定，才能被正确采样。</p><h1 id="保持时间hold-time">保持时间（Hold Time)</h1><p>保持时间是指<strong>数据信号在时钟信号上升沿或下降沿到来之后仍需保持稳定的最小时间</strong>。<br />-换句话说，输入数据在时钟触发沿之后的这段时间内，不能立即发生变化，否则可能导致触发器采样错误。<br />- 保持时间与触发器内部电路的反馈延迟相关。<br /><strong>例如：</strong>如果一个触发器的保持时间是1ns，那么输入数据在时钟边沿之后至少要保持1ns不变</p><h1 id="建立时间和保持时间的作用">建立时间和保持时间的作用</h1><p>这两个参数保证了触发器能够正确采样数据，防止因时序问题导致的不稳定或错误。它们是设计数字电路时序约束的关键因素：<br />1.<strong>建立时间确保输入信号在触发器采样之前稳定下来</strong>，避免采样到错误的瞬态信号。<br />2.<strong>保持时间确保触发器在完成采样后有足够的时间锁存数据</strong>。</p><h1 id="总结对比">总结对比</h1><table><colgroup><col style="width: 15%" /><col style="width: 58%" /><col style="width: 25%" /></colgroup><thead><tr><th>参数</th><th>定义</th><th>时间范围</th></tr></thead><tbody><tr><td>建立时间</td><td>数据在时钟沿到来前需要稳定的最短时间。</td><td>时钟沿之前的时间</td></tr><tr><td>保持时间</td><td>数据在时钟沿到来后需要保持稳定的最短时间。</td><td>时钟沿之后的时间</td></tr></tbody></table>]]></content>
     
     
       
@@ -544,35 +573,6 @@ al</summary>
     
     
     <category term="GPS" scheme="https://tresordie.github.io/tags/GPS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>VNA校准</title>
-    <link href="https://tresordie.github.io/2022/05/29/VNA%E6%A0%A1%E5%87%86/"/>
-    <id>https://tresordie.github.io/2022/05/29/VNA%E6%A0%A1%E5%87%86/</id>
-    <published>2022-05-29T02:00:00.000Z</published>
-    <updated>2022-11-10T16:07:01.982Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="仪器vna校准">[仪器]VNA校准</h1><h2 id="为什么需要进校准">1. 为什么需要进⾏校准？</h2><blockquote><ol type="1"><li>在所有的RF测量中，VNA测量求有最⾼的准确性及可重复性，故⽽对仪器有校准要求</li></ol></blockquote><h2 id="有哪些类型的误差源">2. 有哪些类型的误差源？</h2><blockquote><p>⼀般来讲，在VNA测量过程中⼀般有3种误差源,⽆论哪种误差，都可能造成幅度或相位不准确(即⽮量)</p><ol type="a"><li>drift errors 漂移误差</li></ol><ul><li><p>漂移误差是在校准后环境变化所造成(主要是温度变化造成的)</p></li><li><p>可以通过控制测试境且让仪器有时间预热</p></li><li><p>可以在变化的环境中执⾏新的校准来消除漂移误差</p></li></ul><p><font color ='red'>[总结]即使采取上述的措施,也不可能完全的消除漂移误差，也只能是尽可能的减⼩漂移误差</font></p><ol start="2" type="a"><li>random errors 随机误差</li></ol><ul><li><p>随机误差主要是由测试环境搭建引起的(设备噪⾳，测量操作，cables/connector等等)</p></li><li><p>随机误差随时间推移⽽变化，不可重复且不可预料</p></li><li><p>可以通过⾼精度仪器以及好的操作实践可以最⼤化的减⼩随机误差，但是⽆法消除</p></li></ul><ol start="3" type="a"><li>systematic errors 系统误差</li></ol><ul><li><p>系统误差是可重复，可预测且不会随时间发⽣变化</p></li><li><p>还有⼀部分原因是VNA及测试设置中有⼀些⾮理想器件引起(VNA中的缺陷，e.g.,例如定向耦合器的⽅向 性不完整；还有Cable loss；阻抗不匹配)</p></li><li><p>系统误差⼏乎完全可以通过校准的⽅式消除</p></li></ul></blockquote><h2 id="什么是calibration">3. 什么是Calibration?</h2><blockquote><ol type="a"><li><p>Calibration的⽬的是从测量结果中剔除系统误差</p></li><li><p>校准的步骤：</p></li></ol><p>​ (1) 基于测量环境的搭建及期望的结果来选择校准类型</p><p>​ (2) 连接校准标准件到相应的位置</p><p>​ (3) 运⾏校准程序并测量响应(通常需要进⾏多个步骤的操作)</p><p>​ (4) 测量DUT时，校准数据被⽤于纠正测量结果</p></blockquote><h2 id="measurement-calibration-vs-instrument-calibration">4.Measurement calibration VS Instrument calibration</h2><blockquote><ol type="a"><li><p>Measurementcalibration是⽤于消除测量的系统误差，由⽤户⾃⾏校准(会频繁使⽤)</p></li><li><p>Instrumentcalibration⽤于设备的校准，主要是为了鉴定仪器是否是以其⾃身spec运⾏的，⽐如我想要仪器输出10dBm，那么⽤户控制仪器输出10dBm时，仪器实 际上是否输出了10dBm.⼀般情况下都是由专⻔的服务机构或者校准中⼼执⾏校准的，可能间隔⼏年才校准⼀次</p></li></ol></blockquote><h2 id="calibration-or-reference-plane校准或参考平">5. Calibration orreference plane(校准或参考平⾯)</h2><blockquote><ol type="a"><li><p>校准平⾯或者参考平⾯是在校准时才考虑的</p></li><li><p>校准时，DUT不能直接连接到VNA的ports</p></li><li><p>校准时要避免所有对校准或者参考平⾯的影响</p></li></ol></blockquote><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/VNA%20reference%20plane.png" /></p><h2 id="校准标准件">6. 校准标准件</h2><blockquote><ol type="a"><li><p>校准标准件⼀般需要单独购买，其收集在⼀个校准套件⾥⾯</p></li><li><p>校准套件是⼀套⾼精度且已知幅度和相位响应的终端或者耦合器</p></li></ol><p>​ (1) 标准间数据包含在校准套件定义的⽂件中</p><p>​ (2) 定义通常是预加载到仪器端，或者通过USB或者其其它接⼝导⼊</p><ol start="3" type="a"><li>标准件被连接到校准或参考平⾯，在校准过程中进⾏测量</li></ol></blockquote><h2 id="常的校准标准及说明">7. 常⽤的校准标准及说明</h2><blockquote><ol type="a"><li>4种最常⽤的校准标准</li></ol><ul><li><p>Through(T)</p></li><li><p>Open(O)</p></li><li><p>Short(S)</p></li><li><p>Match(M) 也叫 Load</p></li></ul><ol start="2" type="a"><li>校准说明</li></ol><p>​ (1)现实中的校准套件并不是理想的，特别是在⼀个宽频率范围(⽐如在100MHz以上的开路电容就会增加，所以不同开路套件测出的值会有差别，所以需要对此标准需要有专⻔的数据描述)</p><p>​ (2) 特定的校准标准需要有数据进⾏描述说明</p></blockquote><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/VNA%20Through%20standard.png"alt="VNA Through standard" /></p><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/VNA%20ECal.png"alt="VNA ECal" /></p><h2 id="校准单元">8. 校准单元</h2><blockquote><ol type="a"><li><p>校准套件有常规的分⽴器件的校准套件或者是集成了多种校准⽅式的T型校准件(1个T型件包含了Open/Short/Through/Match校准)</p></li><li><p>还有⾃动校准器</p></li></ol><p>​ (1) ⾃动校准器中包含了校准标准件，在校准过程中内部电控切换，通常是可以被VNA控制(通常是通过USB)</p><p>​ (2)内部标准件⽤于校准的数据被存储在⾃动校准单元⾥⾯，可以被VAN读取</p><p>​ (3) ⾃动校准的引⼊最⼩化了操作⼈员的介⼊，且校准过程叫⼈⼯校准更快，更少有机会有操作失误(如连接错误的校准件)，相对于分⽴校准件，其磨损程度更⼩</p></blockquote><h2 id="什么是校准类型">9. 什么是校准类型</h2><blockquote><ol type="a"><li>校准类型定义了我们需要连接哪些校准标准件</li></ol></blockquote><h2 id="校准类型的选择的考虑因素">10. 校准类型的选择的考虑因素</h2><blockquote><p>校准类型基于⼀下因素来选择：</p><ol type="a"><li><p>端⼝数量</p></li><li><p>测量的⽅向性</p></li><li><p>要求的准确等级</p></li><li><p>时间要求</p></li><li><p>可⽤的校准标准件</p></li></ol></blockquote><h2 id="校准类型">11. 校准类型</h2><blockquote><ol type="a"><li><p>Reﬂection Normalization - 反射归⼀化</p></li><li><p>Full One Port Calibration(OSM) - 全⼀端⼝校准</p></li><li><p>Transmission Normalization - 传输归⼀化</p></li><li><p>One Path Two Port Calibration - 两端⼝⼀个通路校准</p></li><li><p>Full Two Port Calibration(TOSM) - 两端⼝全校准</p></li><li><p>Full Two Port Calibration(UOSM) - 两端⼝全校准</p></li></ol></blockquote><h2 id="one-port-calibration单端校准">12. One PortCalibration(单端⼝校准)</h2><blockquote><ol type="a"><li>⽤于反射测量的单端⼝校准</li></ol><ol type="1"><li>Full one-port calibration(OSM - Open/Short/Match)</li></ol><ul><li>校准速度慢，但是有更⾼的精度</li><li>要求open, short, match校准</li></ul><ol start="2" type="1"><li>归⼀化校准</li></ol><ul><li><p>校准速度更快，但是精确度低</p></li><li><p>只需要⼀次校准，Open或者Short校准</p></li></ul></blockquote><p><imgsrc="https://raw.githubusercontent.com/Tresordie/PicBed/master/VNA%20Calibration.png"alt="VNA Calibration" /></p><h2 id="two-port-calibration双端校准">13. Two portcalibration(双端⼝校准)</h2><blockquote><ol type="a"><li><p>双端⼝校准适⽤于传输测量</p></li><li><p>校准⽅式</p></li></ol><ul><li><p>Normalization 归⼀化校准</p><ol type="1"><li><p>需要连接Through</p></li><li><p>可以进⾏单向或者双向校准</p></li></ol></li><li><p>One path two ports 双端⼝单向</p><ol type="1"><li>Full one-port OSM(Open/Short/Match) + Transmission normalization—&gt; 适合单向传输</li></ol></li><li><p>Full two port calibration 双端⼝全校准</p><ul><li><p>TOSM: Through Open/Short/Match</p><ol type="1"><li><p>TOSM(Through/Open/Short/Match)：双端⼝校准中最常⽤的校准</p></li><li><p>应⽤场合为: ①双端⼝的反射测量. ②双向传输测量 I</p></li><li><p>校准步骤要求：需要进⾏8次扫描①每个端⼝都要进⾏单端⼝的OSM(Open/Short/Match)标准件扫描，这就相当于6次了②双向的Through标准件测试，这就相当于两次了</p></li><li><p>校准完成后，就可以进⾏S参数的测量了;TOSM校准的弱点在于校准使⽤的时间较⻓，需要8次扫描才能完成，如上描述.</p></li></ol></li><li><p>UOSM: Unknown Open/Short/Match</p><ol type="1"><li><p>通常使⽤⼀个通⽤的RFcoupler来取代校准套件中的Through标准件</p></li><li><p>UOSM有⼀个特征是：双向特征完全相同，即S 21 == S12</p></li><li><p>UOSM对于有着不同类型的接头是有帮助的，如⼀端为SMA接⼝，另⼀端为不同类型接⼝</p></li></ol></li></ul></li></ul></blockquote><h2 id="isolation-measurement-校准法">14. Isolation measurement校准⽅法</h2><blockquote><ol type="a"><li><p>Isolation measurement ⽅法是对 Through calibration校准的补充</p></li><li><p>Isolation measurement⽅法主要是是测量通道信号泄漏及对相邻通道的串扰</p></li><li><p>Isolation measurement 没有相应的物理校准标准</p></li><li><p>通常的校准⽅法是在测试端⼝终端出接 50ohm 的终端负载</p></li><li><p>在绝⼤多书的VNA的测量中，这种错误(泄漏及串扰)并不是⼀个重⼤的错误源</p></li></ol></blockquote><h2 id="什么时候需要进户校准">15. 什么时候需要进⾏⽤户校准</h2><blockquote><ol type="a"><li><p>⽤户重新设置了频率范围</p></li><li><p>对于DUT的连接发⽣了变化(如，RF CableLength发⽣了变化，Adaptor等等发⽣了变化)</p></li><li><p>使⽤的VNA port发⽣了变化</p></li></ol></blockquote><p>[参考] 罗德施瓦茨的VNA校准介绍</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;仪器vna校准&quot;&gt;[仪器]VNA校准&lt;/h1&gt;
-&lt;h2 id=&quot;为什么需要进校准&quot;&gt;1. 为什么需要进⾏校准？&lt;/h2&gt;
-&lt;blockquote&gt;
-&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;在所有的RF测量中，
-VNA测量求有最⾼的准确性及可重复性，故⽽对仪器</summary>
-      
-    
-    
-    
-    <category term="硬件" scheme="https://tresordie.github.io/categories/%E7%A1%AC%E4%BB%B6/"/>
-    
-    
-    <category term="VNA" scheme="https://tresordie.github.io/tags/VNA/"/>
     
   </entry>
   
